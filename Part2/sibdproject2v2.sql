@@ -168,7 +168,7 @@ insert into Reading values("4552",'Samsung','2010-02-16 12:13:06',60);
 insert into Reading values("3345",'LG','2017-11-10 18:24:00',250);
 insert into Reading values("3345",'LG','2017-10-10 21:22:22',201);
 insert into Reading values("3345",'LG','2017-10-11 22:23:02',100);
-insert into Reading values("1234",'LG','2017-09	-02 12:00:22',300);
+insert into Reading values("1234",'LG','2017-09-02 12:00:22',300);
 
 /*Start|END*/
 insert into Period values('2012-02-23 11:02:00','2013-02-23 09:10:00');
