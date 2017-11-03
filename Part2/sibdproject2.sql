@@ -1,17 +1,17 @@
 
 create table Patient (
-	number int unsigned,
+	number_id int unsigned,
 	name varchar(255),
 	birthday DATE,
 	address varchar(255),
-	primary key(number) 
+	primary key(number_id) 
 );
 
 create table Doctor(
-	number int unsigned,
+	number_id int unsigned,
 	doctor_id int unsigned,
 	primary key(doctor_id),
-	foreign key(number) references Patient(number)
+	foreign key(number_id) references Patient(number_id)
 );
 
 create table Device(
@@ -32,16 +32,16 @@ create table Sensor(
 create table Reading(
 	snum int unsigned,
 	manuf varchar(255),
-	datetime DATETIME,
+	date_of_reading DATETIME,
 	value numeric(10,2),
 	primary key(snum, manuf, datetime),
 	foreign key(snum, manuf) references Sensor(snum, manuf)
 );
 
 create table Period(
-	start DATETIME,
-	end DATETIME,
-	primary key(start, end)
+	start_period DATETIME,
+	end_period DATETIME,
+	primary key(start_period, end_period)
 );
 
 create table Wears(
@@ -50,18 +50,18 @@ create table Wears(
 	patient int unsigned,
 	snum int unsigned,
 	manuf varchar(255),
-	primary key(start, end, patient),
-	foreign key(start, end) references Period(start, end),
-	foreign key(patient) references Patient(number),
+	primary key(start_period, end_period, patient),
+	foreign key(start_period, end_period) references Period(start_period, end_period),
+	foreign key(patient) references Patient(number_id),
 	foreign key(snum, manuf) references Device(serialnum, manufacturer)
 );
 
 create table Request(
-	number int unsigned,
+	request_number int unsigned,
 	patient_id int unsigned,
 	doctor_id int unsigned,
-	date DATE,
-	primary key(number),
+	date_of_request DATE,
+	primary key(request_number),
 	foreign key(patient_id) references Patient(number),
 	foreign key(doctor_id) references Doctor(doctor_id)
 );
@@ -69,12 +69,12 @@ create table Request(
 create table Study(
 	request_number int,
 	description varchar(255),
-	date DATE,
+	date_of_study DATE,
 	doctor_id int unsigned,
 	manufacturer varchar(255),
 	serial_number int unsigned,
 	primary key(request_number, description),
-	foreign key(request_number) references Request(number),
+	foreign key(request_number) references Request(request_number),
 	foreign key(doctor_id) references Doctor(doctor_id),
 	foreign key(manufacturer, serial_number) references Device(serialnum, manufacturer)
 );

@@ -13,18 +13,18 @@ drop table if exists Patient;
 
 
 create table Patient (
-	number int unsigned,
+	patient_id int unsigned,
 	name varchar(255),
 	birthday DATE,
 	address varchar(255),
-	primary key(number) 
+	primary key(patient_id) 
 );
 
 create table Doctor(
-	number int unsigned,
+	patient_id int unsigned,
 	doctor_id int unsigned,
 	primary key(doctor_id),
-	foreign key(number) references Patient(number)
+	foreign key(patient_id) references Patient(patient_id)
 );
 
 create table Device(
@@ -52,30 +52,30 @@ create table Reading(
 );
 
 create table Period(
-	start DATETIME,
-	end DATETIME,
-	primary key(start, end)
+	start_date DATETIME,
+	end_date DATETIME,
+	primary key(start_date, end_date)
 );
 
 create table Wears(
-	start DATETIME,
-	end DATETIME,
+	start_date DATETIME,
+	end_date DATETIME,
 	patient int unsigned,
 	snum int unsigned,
 	manuf varchar(255),
-	primary key(start, end, patient),
-	foreign key(start, end) references Period(start, end),
-	foreign key(patient) references Patient(number),
+	primary key(start_date, end_date, patient),
+	foreign key(start_date, end_date) references Period(start_date, end_date),
+	foreign key(patient) references Patient(id),
 	foreign key(snum, manuf) references Device(serialnum, manufacturer)
 );
 
 create table Request(
-	number int unsigned,
+	request_number int unsigned,
 	patient_id int unsigned,
 	doctor_id int unsigned,
 	date_of_request DATE,
-	primary key(number),
-	foreign key(patient_id) references Patient(number),
+	primary key(request_number),
+	foreign key(patient_id) references Patient(id),
 	foreign key(doctor_id) references Doctor(doctor_id)
 );
 /*|request_numb|descprition|date|docID(FK)|manuf(FK)|serial(FK)|*/
@@ -88,7 +88,7 @@ create table Study(
 	manufacturer varchar(255),
 	serial_number int unsigned,
 	primary key(request_number, description),
-	foreign key(request_number) references Request(number),
+	foreign key(request_number) references Request(request_number	),
 	foreign key(doctor_id) references Doctor(doctor_id),
 	foreign key(serial_number, manufacturer) references Device(serialnum, manufacturer)
 );
