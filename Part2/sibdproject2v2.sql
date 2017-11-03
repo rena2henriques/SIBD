@@ -159,8 +159,8 @@ insert into Sensor values("1234",'LG','LDL cholesterol in mg/dL');
 insert into Sensor values("3345",'LG','LDL cholesterol in mg/dL');
 
 /*snum(FK)|manuf(FK)|datetime|value|*/
-insert into Reading values("3000",'Medtronic','2013-02-16 19:03:00',5);
-insert into Reading values("3000",'Medtronic','2013-02-17 11:03:00',6);
+insert into Reading values("3000",'Medtronic','2017-02-16 19:03:00',5);
+insert into Reading values("3000",'Medtronic','2017-02-17 11:03:00',6);
 insert into Reading values("3333",'Medtronic','2002-05-11 12:01:10',10);
 insert into Reading values("2000",'Siemens','2013-02-16 11:03:10',20);
 insert into Reading values("2000",'Siemens','2013-02-16 11:23:01',1);
@@ -168,7 +168,7 @@ insert into Reading values("4552",'Samsung','2010-02-16 12:13:06',60);
 insert into Reading values("3345",'LG','2017-11-10 18:24:00',250);
 insert into Reading values("3345",'LG','2017-10-10 21:22:22',201);
 insert into Reading values("3345",'LG','2017-10-11 22:23:02',100);
-insert into Reading values("1234",'LG','2017-09-02 12:00:22',300);
+insert into Reading values("1234",'LG','2017-09	-02 12:00:22',300);
 
 /*Start|END*/
 insert into Period values('2012-02-23 11:02:00','2013-02-23 09:10:00');
@@ -184,10 +184,10 @@ insert into Period values('2017-02-02 14:00:00','2999-12-31 00:00:00');	/*until 
 
 /*|start(FK)|end(FK)|patient_id(FK)|snum(FK)|manuf(FK)|*/
 insert into Wears values('2013-02-15 11:22:00','2999-12-31 00:00:00',9256926,"2000",'Siemens');
-insert into Wears values('2012-02-25 12:02:00','2013-05-19 15:15:00',6,"3000",'Medtronic');
+insert into Wears values('2016-02-25 12:02:00','2017-05-19 15:15:00',6,"3000",'Medtronic');
 insert into Wears values('2001-01-30 14:00:00','2003-02-16 19:03:00',2,"3333",'Medtronic');
 insert into Wears values('2009-03-11 10:11:00','2010-03-21 08:11:00',7465,"4552",'Samsung');
-insert into Wears values('2009-03-11 10:11:00','2010-03-21 08:11:00',27233,"1234",'LG');
+insert into Wears values('2017-03-11 10:11:00','2017-09-21 08:11:00',27233,"1234",'LG');
 insert into Wears values('2017-02-02 14:00:00','2999-12-31 00:00:00',1,"3345",'LG');
 
 
@@ -195,16 +195,18 @@ insert into Wears values('2017-02-02 14:00:00','2999-12-31 00:00:00',1,"3345",'L
 /*|number|patientID(FK)|doctorID(FK)|date|*/
 insert into Request values(874, 2, 12345,'2002-02-11');
 insert into Request values(86351, 9256926, 4477, '2014-10-23');
-insert into Request values(126, 6, 8246527,'2013-02-11');
+insert into Request values(126, 6, 8246527,'2017-02-11');
 insert into Request values(9769, 7465, 1996, '2009-10-23');
+insert into Request values(111,1,5555,'2017-05-05')
 
 /*Study dates >= request dates*/
 /*Doc que receitou o exame não o pode performar*/
 /*|request_numb|descprition|date|docID(FK)|manuf(FK)|serial(FK)|*/
 insert into Study values(86351,'X-ray left foot','2014-10-24',8246527,'Siemens',"2000");
-insert into Study values(126,'MRI scan', '2013-02-15',1996,'Medtronic',"3000");
+insert into Study values(126,'MRI scan', '2017-02-15',1996,'Medtronic',"3000");
 insert into Study values(874,'Blood analysis','2002-03-01',1996,'Medtronic',"3333");
 insert into Study values(9769,'Echography right arm','2009-10-27',76592659,'Samsung',"4552");
+insert into Study values(111,'Echography left arm', '2017-05-20',1996,'LG',"3345")
 
 /*All these series must be refered at least once in the elements table*/
 /*|id|name|url|request_no(FK)|descprition(FK)|*/
