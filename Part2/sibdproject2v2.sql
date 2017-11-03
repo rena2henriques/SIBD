@@ -65,7 +65,7 @@ create table Wears(
 	manuf varchar(255),
 	primary key(start_date, end_date, patient),
 	foreign key(start_date, end_date) references Period(start_date, end_date),
-	foreign key(patient) references Patient(id),
+	foreign key(patient) references Patient(patient_id),
 	foreign key(snum, manuf) references Device(serialnum, manufacturer)
 );
 
@@ -75,7 +75,7 @@ create table Request(
 	doctor_id int unsigned,
 	date_of_request DATE,
 	primary key(request_number),
-	foreign key(patient_id) references Patient(id),
+	foreign key(patient_id) references Patient(patient_id),
 	foreign key(doctor_id) references Doctor(doctor_id)
 );
 /*|request_numb|descprition|date|docID(FK)|manuf(FK)|serial(FK)|*/
@@ -96,7 +96,7 @@ create table Study(
 create table Series(
 	series_id int unsigned,
 	name varchar(255),
-	base_utl varchar(255),
+	base_url varchar(255),
 	request_number int unsigned,
 	description varchar(255),
 	primary key(series_id),
