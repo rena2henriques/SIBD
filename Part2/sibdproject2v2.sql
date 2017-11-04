@@ -11,7 +11,6 @@ drop table if exists Device;
 drop table if exists Doctor;
 drop table if exists Patient;
 
-
 create table Patient (
 	patient_id int unsigned,
 	name varchar(255),
@@ -271,5 +270,3 @@ insert into Region values(7000,3,0.8,0.9,0.1,0.6);
 /*foreign keys --> os tipos têm de bater certo, se é int de um lado tem de ser int do outro (n pode ser long int)
 * foreign keys (x,y) references aaaa(x,y), a ordem x,y tem de bater certo com a primary key de aaaa (a ordem x,y tem que ser igual em todo o lado)
 * a ordem do drop tables tem que estar certo se não dá erros, apagar primeiro as tabelas com foreign keys*/
-
-
