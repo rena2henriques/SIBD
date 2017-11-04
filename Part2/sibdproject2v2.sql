@@ -150,7 +150,8 @@ insert into Device values("3345",'LG','CholesterolMeter');
 insert into Device values("20",'Siemens','X-ray1');
 insert into Device values("31",'Medtronic','scanner');
 insert into Device values("443",'Medtronic','BloodReader');
-insert into Device values("45",'Samsung','Echo123');
+insert into Device values("31",'Samsung','Echo123');
+insert into Device values("443",'Samsung','Echo123');
 
 
 /*|snum(FK)|manuf(fkey)|units|*/
@@ -205,6 +206,7 @@ insert into Request values(9769, 7465, 1996, '2009-10-23');
 insert into Request values(111,1,5555,'2017-05-05');
 insert into Request values(112,1,5555,'2016-08-05');
 insert into Request values(128,6,8246527,'2017-02-23');
+insert into Request values(1000,7465,1996,'2010-10-01')
 
 /*Study dates >= request dates*/
 /*Doc que receitou o exame não o pode performar*/
@@ -212,7 +214,8 @@ insert into Request values(128,6,8246527,'2017-02-23');
 insert into Study values(86351,'X-ray left foot','2014-10-24',8246527,'Siemens',"20");
 insert into Study values(126,'MRI scan', '2017-02-15',1996,'Medtronic',"31");
 insert into Study values(874,'Blood analysis','2002-03-01',1996,'Medtronic',"443");
-insert into Study values(9769,'Echography right arm','2009-10-27',76592659,'Samsung',"45");
+insert into Study values(9769,'Echography right arm','2009-10-27',76592659,'Samsung',"31");
+insert into Study values(1000,'Echography right arm','2010-10-27',76592659,'Samsung',"443")
 insert into Study values(111,'Blood analysis', '2017-05-20',1996,'Medtronic',"443");
 insert into Study values(112,'MRI scan','2016-08-22',8246527,'Medtronic','31');
 insert into Study values(128,'Blood analysis','2017-02-27',76592659,'Medtronic',"443");
@@ -226,6 +229,7 @@ insert into Series values(4000,'Right arm echography','www.clinic.com/9769echo',
 insert into Series values(5000,'Blood parameters','www.clinic.com/111blood',111,'Blood analysis');
 insert into Series values(6000,'MRI shot','www.clinic.com/112mri',112,'MRI scan');
 insert into Series values(7000,'Blood parameters','www.clinic.com/128blood',128,'Blood analysis');
+insert into Series values(4001,'Right arm echography','www.clinic.com/1000echo',1000,'Echography right arm');)
 
 /*All these elements must be referenced at least once in the region table*/
 /*|series_id(FK)|elem_index|*/
@@ -244,6 +248,7 @@ insert into Element values(6000,2);
 insert into Element values(7000,1);
 insert into Element values(7000,2);	
 insert into Element values(7000,3);
+insert into Element values(4001,2);
 
 /*|series_id(FK)|elem_index(FK)|x1|y1|x2|y2|*/
 insert into Region values(1000,1,0.5,0.5,0.7,0.7);
@@ -252,16 +257,16 @@ insert into Region values(1000,3,0.5,0.6,0.7,0.7);
 insert into Region values(2000,1,0.5,0.5,0.7,0.7);
 insert into Region values(3000,1,0.5,0.5,0.7,0.7);
 insert into Region values(3000,1,0.1,0.5,0.3,0.7);
-insert into Region values(4000,1,0.5,0.1,0.7,0.7);
+insert into Region values(4000,1,0.5,0.1,0.7,0.3);
 insert into Region values(4000,2,0.1,0.5,0.2,0.9);
-insert into Region values(5000,1,0.2,0.5,0.2,0.3);
-insert into Region values(5000,2,0.4,0.5,0.3,0.6);
-insert into Region values(6000,1,0.2,0.5,0.2,0.3);
-insert into Region values(6000,2,0.7,1.0,0.2,0.3);
-insert into Region values(7000,1,0.2,0.4,0.1,0.3);
+insert into Region values(5000,1,0.2,0.1,0.3,0.3);
+insert into Region values(5000,2,0.4,0.5,0.5,0.6);
+insert into Region values(6000,1,0.2,0.5,0.5,0.7);
+insert into Region values(6000,2,0.7,0.2,0.9,0.3);
+insert into Region values(7000,1,0.2,0.4,0.4,0.5);
 insert into Region values(7000,2,0.1,0.5,0.3,0.6);
-insert into Region values(7000,3,0.8,0.9,0.1,0.6);
-
+insert into Region values(7000,3,0.1,0.4,0.4,0.6);
+insert into Region values(4001,2,0.2,0.5,0.4,0.7);
 
 
 
