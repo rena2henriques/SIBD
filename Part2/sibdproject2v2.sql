@@ -206,7 +206,7 @@ insert into Request values(9769, 7465, 1996, '2009-10-23');
 insert into Request values(111,1,5555,'2017-05-05');
 insert into Request values(112,1,5555,'2016-08-05');
 insert into Request values(128,6,8246527,'2017-02-23');
-insert into Request values(1000,7465,1996,'2010-10-01')
+insert into Request values(1000,7465,1996,'2010-10-01');
 
 /*Study dates >= request dates*/
 /*Doc que receitou o exame não o pode performar*/
@@ -215,7 +215,7 @@ insert into Study values(86351,'X-ray left foot','2014-10-24',8246527,'Siemens',
 insert into Study values(126,'MRI scan', '2017-02-15',1996,'Medtronic',"31");
 insert into Study values(874,'Blood analysis','2002-03-01',1996,'Medtronic',"443");
 insert into Study values(9769,'Echography right arm','2009-10-27',76592659,'Samsung',"31");
-insert into Study values(1000,'Echography right arm','2010-10-27',76592659,'Samsung',"443")
+insert into Study values(1000,'Echography right arm','2010-10-27',76592659,'Samsung',"443");
 insert into Study values(111,'Blood analysis', '2017-05-20',1996,'Medtronic',"443");
 insert into Study values(112,'MRI scan','2016-08-22',8246527,'Medtronic','31');
 insert into Study values(128,'Blood analysis','2017-02-27',76592659,'Medtronic',"443");
