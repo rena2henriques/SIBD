@@ -11,7 +11,6 @@ drop table if exists Device;
 drop table if exists Doctor;
 drop table if exists Patient;
 
-
 create table Patient (
 	patient_id int unsigned,
 	name varchar(255),
@@ -65,7 +64,7 @@ create table Wears(
 	manuf varchar(255),
 	primary key(start_date, end_date, patient),
 	foreign key(start_date, end_date) references Period(start_date, end_date),
-	foreign key(patient) references Patient(id),
+	foreign key(patient) references Patient(patient_id),
 	foreign key(snum, manuf) references Device(serialnum, manufacturer)
 );
 
@@ -167,6 +166,7 @@ insert into Reading values(2000,'Siemens','2013-02-16 11:23:01',1);
 insert into Reading values(4552,'Samsung','2010-02-16 12:13:06',60);
 insert into Reading values(3345,'LG','2017-11-10 18:24:00',250);
 insert into Reading values(3345,'LG','2017-10-10 21:22:22',201);
+insert into Reading values(3345,'LG','2015-10-10 19:22:22',219);
 insert into Reading values(3345,'LG','2017-10-11 22:23:02',100);
 insert into Reading values(1234,'LG','2010-01-02 12:00:22',300);
 
@@ -241,5 +241,3 @@ insert into Region values(4000,2,0.1,0.5,0.2,0.9);
 /*foreign keys --> os tipos têm de bater certo, se é int de um lado tem de ser int do outro (n pode ser long int)
 * foreign keys (x,y) references aaaa(x,y), a ordem x,y tem de bater certo com a primary key de aaaa (a ordem x,y tem que ser igual em todo o lado)
 * a ordem do drop tables tem que estar certo se não dá erros, apagar primeiro as tabelas com foreign keys*/
-
-
