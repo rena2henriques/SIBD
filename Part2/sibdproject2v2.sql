@@ -229,7 +229,7 @@ insert into Series values(4000,'Right arm echography','www.clinic.com/9769echo',
 insert into Series values(5000,'Blood parameters','www.clinic.com/111blood',111,'Blood analysis');
 insert into Series values(6000,'MRI shot','www.clinic.com/112mri',112,'MRI scan');
 insert into Series values(7000,'Blood parameters','www.clinic.com/128blood',128,'Blood analysis');
-insert into Series values(4001,'Right arm echography','www.clinic.com/1000echo',1000,'Echography right arm');)
+insert into Series values(4001,'Right arm echography','www.clinic.com/1000echo',1000,'Echography right arm');
 
 /*All these elements must be referenced at least once in the region table*/
 /*|series_id(FK)|elem_index|*/
@@ -247,7 +247,7 @@ insert into Element values(6000,1);
 insert into Element values(6000,2);
 insert into Element values(7000,1);
 insert into Element values(7000,2);	
-insert into Element values(7000,3);
+insert into Element values(7000,3);	
 insert into Element values(4001,2);
 
 /*|series_id(FK)|elem_index(FK)|x1|y1|x2|y2|*/
