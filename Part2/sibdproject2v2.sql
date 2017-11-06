@@ -167,7 +167,7 @@ insert into Sensor values("3345",'LG','LDL cholesterol in mg/dL');
 /*snum(FK)|manuf(FK)|datetime|value|*/
 insert into Reading values("3000",'Medtronic','2017-02-16 19:03:00',5);
 insert into Reading values("3000",'Medtronic','2017-02-17 11:03:00',6);
-insert into Reading values("3000",'Medtronic','2017-02-20 11:03:00',250)
+insert into Reading values("3000",'Medtronic','2017-02-20 11:03:00',250);
 insert into Reading values("3333",'Medtronic','2002-05-11 12:01:10',10);
 insert into Reading values("2000",'Siemens','2013-02-16 11:03:10',20);
 insert into Reading values("2000",'Siemens','2013-02-16 11:23:01',1);
