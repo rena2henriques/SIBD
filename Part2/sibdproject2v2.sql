@@ -121,9 +121,9 @@ create table Region(
 );
 
 /*|number|name|bday|address|*/
-insert into Patient values(1,'Ruben', '1995-02-25', 'Av. do TÈcnico');
+insert into Patient values(1,'Ruben', '1995-02-25', 'Av. do T√©cnico');
 insert into Patient values(6,'Francisco', '1989-12-19', 'Av. da Liberdade');
-insert into Patient values(2,'AndrÈ', '1912-04-15', 'Rua oliveirinha');
+insert into Patient values(2,'Andr√©', '1912-04-15', 'Rua oliveirinha');
 insert into Patient values(18012,'Mariana', '1999-01-23', 'Valverde');
 insert into Patient values(27233,'Fedra', '1987-11-25', 'Cova da Moura');
 insert into Patient values(9256926,'Ruben', '1991-03-30', 'Benfica');
@@ -166,6 +166,7 @@ insert into Sensor values("3345",'LG','LDL cholesterol in mg/dL');
 /*snum(FK)|manuf(FK)|datetime|value|*/
 insert into Reading values("3000",'Medtronic','2017-02-16 19:03:00',5);
 insert into Reading values("3000",'Medtronic','2017-02-17 11:03:00',6);
+insert into Reading values("3000",'Medtronic','2017-02-20 11:03:00',250)
 insert into Reading values("3333",'Medtronic','2002-05-11 12:01:10',10);
 insert into Reading values("2000",'Siemens','2013-02-16 11:03:10',20);
 insert into Reading values("2000",'Siemens','2013-02-16 11:23:01',1);
@@ -174,6 +175,7 @@ insert into Reading values("3345",'LG','2017-11-10 18:24:00',250);
 insert into Reading values("3345",'LG','2017-10-10 21:22:22',201);
 insert into Reading values("3345",'LG','2017-10-11 22:23:02',100);
 insert into Reading values("1234",'LG','2017-09-02 12:00:22',300);
+insert into Reading values("1234",'LG','2017-09-22 12:00:22',340);
 
 /*Start|END*/
 insert into Period values('2012-02-23 11:02:00','2013-02-23 09:10:00');
@@ -201,24 +203,24 @@ insert into Wears values('2017-02-02 14:00:00','2999-12-31 00:00:00',1,"3345",'L
 /*|number|patientID(FK)|doctorID(FK)|date|*/
 insert into Request values(874, 2, 12345,'2002-02-11');
 insert into Request values(86351, 9256926, 4477, '2014-10-23');
-insert into Request values(126, 6, 8246527,'2017-02-11');
+insert into Request values(126, 6, 8246527,'2016-02-11');
 insert into Request values(9769, 7465, 1996, '2009-10-23');
-insert into Request values(111,1,5555,'2017-05-05');
-insert into Request values(112,1,5555,'2016-08-05');
-insert into Request values(128,6,8246527,'2017-02-23');
+insert into Request values(111,1,5555,'2016-05-05');
+insert into Request values(112,1,5555,'2017-08-05');
+insert into Request values(128,6,8246527,'2016-02-23');
 insert into Request values(1000,7465,1996,'2010-10-01');
 
 /*Study dates >= request dates*/
-/*Doc que receitou o exame n„o o pode performar*/
+/*Doc que receitou o exame n√£o o pode performar*/
 /*|request_numb|descprition|date|docID(FK)|manuf(FK)|serial(FK)|*/
 insert into Study values(86351,'X-ray left foot','2014-10-24',8246527,'Siemens',"20");
-insert into Study values(126,'MRI scan', '2017-02-15',1996,'Medtronic',"31");
+insert into Study values(126,'MRI scan', '2016-02-15',1996,'Medtronic',"31");
 insert into Study values(874,'Blood analysis','2002-03-01',1996,'Medtronic',"443");
 insert into Study values(9769,'Echography right arm','2009-10-27',76592659,'Samsung',"31");
 insert into Study values(1000,'Echography right arm','2010-10-27',76592659,'Samsung',"443");
-insert into Study values(111,'Blood analysis', '2017-05-20',1996,'Medtronic',"443");
-insert into Study values(112,'MRI scan','2016-08-22',8246527,'Medtronic','31');
-insert into Study values(128,'Blood analysis','2017-02-27',76592659,'Medtronic',"443");
+insert into Study values(111,'Blood analysis', '2016-05-20',1996,'Medtronic',"443");
+insert into Study values(112,'MRI scan','2017-08-22',8246527,'Medtronic','31');
+insert into Study values(128,'Blood analysis','2016-02-27',76592659,'Medtronic',"443");
 
 /*All these series must be refered at least once in the elements table*/
 /*|id|name|url|request_no(FK)|descprition(FK)|*/
@@ -247,7 +249,7 @@ insert into Element values(6000,1);
 insert into Element values(6000,2);
 insert into Element values(7000,1);
 insert into Element values(7000,2);	
-insert into Element values(7000,3);	
+insert into Element values(7000,3);		
 insert into Element values(4001,2);
 
 /*|series_id(FK)|elem_index(FK)|x1|y1|x2|y2|*/
@@ -272,6 +274,6 @@ insert into Region values(4001,2,0.2,0.5,0.4,0.7);
 
 
 /*CENAS A TER CUIDADO */
-/*foreign keys --> os tipos tÍm de bater certo, se È int de um lado tem de ser int do outro (n pode ser long int)
+/*foreign keys --> os tipos t√™m de bater certo, se √© int de um lado tem de ser int do outro (n pode ser long int)
 * foreign keys (x,y) references aaaa(x,y), a ordem x,y tem de bater certo com a primary key de aaaa (a ordem x,y tem que ser igual em todo o lado)
-* a ordem do drop tables tem que estar certo se n„o d· erros, apagar primeiro as tabelas com foreign keys*/
+* a ordem do drop tables tem que estar certo se n√£o d√° erros, apagar primeiro as tabelas com foreign keys*/
