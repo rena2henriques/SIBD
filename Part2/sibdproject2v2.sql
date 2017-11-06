@@ -113,8 +113,8 @@ create table Region(
 	series_id int unsigned,
 	elem_index int unsigned,
 	x1 FLOAT(4, 3),
-	x2 FLOAT(4, 3),
 	y1 FLOAT(4, 3),
+	x2 FLOAT(4, 3),
 	y2 FLOAT(4, 3),
 	primary key(series_id, elem_index, x1, x2, y1, y2),
 	foreign key(series_id, elem_index) references Element(series_id, elem_index)
