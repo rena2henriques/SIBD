@@ -121,9 +121,10 @@ create table Region(
 );
 
 /*|number|name|bday|address|*/
-insert into Patient values(1,'Ruben', '1995-02-25', 'Av. do Técnico');
+
+insert into Patient values(1,'Ruben', '1995-02-25', 'Av. do Tecnico');
 insert into Patient values(6,'Francisco', '1989-12-19', 'Av. da Liberdade');
-insert into Patient values(2,'André', '1912-04-15', 'Rua oliveirinha');
+insert into Patient values(2,'Andre', '1912-04-15', 'Rua oliveirinha');
 insert into Patient values(18012,'Mariana', '1999-01-23', 'Valverde');
 insert into Patient values(27233,'Fedra', '1987-11-25', 'Cova da Moura');
 insert into Patient values(9256926,'Ruben', '1991-03-30', 'Benfica');
