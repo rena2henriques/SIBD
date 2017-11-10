@@ -268,9 +268,6 @@ insert into Region values(7000,2,0.1,0.5,0.3,0.6);
 insert into Region values(7000,3,0.1,0.4,0.4,0.6);
 insert into Region values(4001,2,0.2,0.5,0.4,0.7);
 
-
-
-
 /*CENAS A TER CUIDADO */
 /*foreign keys --> os tipos têm de bater certo, se é int de um lado tem de ser int do outro (n pode ser long int)
 * foreign keys (x,y) references aaaa(x,y), a ordem x,y tem de bater certo com a primary key de aaaa (a ordem x,y tem que ser igual em todo o lado)
