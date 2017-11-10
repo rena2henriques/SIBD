@@ -12,18 +12,18 @@ drop table if exists Doctor;
 drop table if exists Patient;
 
 create table Patient (
-	patient_id int unsigned,
+	number int unsigned,
 	name varchar(255),
 	birthday DATE,
 	address varchar(255),
-	primary key(patient_id) 
+	primary key(number) 
 );
 
 create table Doctor(
-	patient_id int unsigned,
+	number int unsigned,
 	doctor_id int unsigned,
 	primary key(doctor_id),
-	foreign key(patient_id) references Patient(patient_id)
+	foreign key(number) references Patient(number)
 );
 
 create table Device(
@@ -44,37 +44,37 @@ create table Sensor(
 create table Reading(
 	snum varchar(255),
 	manuf varchar(255),
-	date_of_reading DATETIME,
+	datetime DATETIME,
 	value numeric(10,2),
-	primary key(snum, manuf, date_of_reading),
+	primary key(snum, manuf, datetime),
 	foreign key(snum, manuf) references Sensor(snum, manuf)
 );
 
 create table Period(
-	start_date DATETIME,
-	end_date DATETIME,
-	primary key(start_date, end_date)
+	start DATETIME,
+	end DATETIME,
+	primary key(start, end)
 );
 
 create table Wears(
-	start_date DATETIME,
-	end_date DATETIME,
+	start DATETIME,
+	end DATETIME,
 	patient int unsigned,
 	snum varchar(255),
 	manuf varchar(255),
-	primary key(start_date, end_date, patient),
-	foreign key(start_date, end_date) references Period(start_date, end_date),
-	foreign key(patient) references Patient(patient_id),
+	primary key(start, end, patient),
+	foreign key(start, end) references Period(start, end),
+	foreign key(patient) references Patient(number),
 	foreign key(snum, manuf) references Device(serialnum, manufacturer)
 );
 
 create table Request(
-	request_number int unsigned,
+	number int unsigned,
 	patient_id int unsigned,
 	doctor_id int unsigned,
-	date_of_request DATE,
-	primary key(request_number),
-	foreign key(patient_id) references Patient(patient_id),
+	date DATE,
+	primary key(number),
+	foreign key(patient_id) references Patient(number),
 	foreign key(doctor_id) references Doctor(doctor_id)
 );
 /*|request_numb|descprition|date|docID(FK)|manuf(FK)|serial(FK)|*/
@@ -82,12 +82,12 @@ create table Request(
 create table Study(
 	request_number int unsigned,
 	description varchar(255),
-	date_of_study DATE,
+	date DATE,
 	doctor_id int unsigned,
 	manufacturer varchar(255),
 	serial_number varchar(255),
 	primary key(request_number, description),
-	foreign key(request_number) references Request(request_number	),
+	foreign key(request_number) references Request(number),
 	foreign key(doctor_id) references Doctor(doctor_id),
 	foreign key(serial_number, manufacturer) references Device(serialnum, manufacturer)
 );
@@ -158,7 +158,7 @@ insert into Device values("443",'Samsung','Echo123');
 /*|snum(FK)|manuf(fkey)|units|*/
 insert into Sensor values("3000",'Medtronic','glucose in mmol/L');
 insert into Sensor values("3333",'Medtronic','glucose in mmol/L');
-insert into Sensor values("2000",'Siemens','systolic pressure in mmHg');
+insert into Sensor values("2000",'Siemens','LDL cholesterol in mg/dL');
 insert into Sensor values("4552",'Samsung','LDL cholesterol in mg/dL');
 insert into Sensor values("1234",'LG','LDL cholesterol in mg/dL');
 insert into Sensor values("3345",'LG','LDL cholesterol in mg/dL');
@@ -169,7 +169,7 @@ insert into Reading values("3000",'Medtronic','2017-02-16 19:03:00',5);
 insert into Reading values("3000",'Medtronic','2017-02-17 11:03:00',6);
 insert into Reading values("3000",'Medtronic','2017-02-20 11:03:00',250);
 insert into Reading values("3333",'Medtronic','2002-05-11 12:01:10',10);
-insert into Reading values("2000",'Siemens','2013-02-16 11:03:10',20);
+insert into Reading values("2000",'Siemens','2017-09-16 11:03:10',202);
 insert into Reading values("2000",'Siemens','2013-02-16 11:23:01',1);
 insert into Reading values("4552",'Samsung','2010-02-16 12:13:06',60);
 insert into Reading values("3345",'LG','2017-11-10 18:24:00',250);
@@ -191,7 +191,7 @@ insert into Period values('2013-02-15 11:22:00','2999-12-31 00:00:00');	/*until 
 insert into Period values('2017-02-02 14:00:00','2999-12-31 00:00:00');	/*until now, according to project1*/
 insert into Period values('2017-03-11 10:11:00','2017-09-21 08:11:00');
 
-/*|start(FK)|end(FK)|patient_id(FK)|snum(FK)|manuf(FK)|*/
+/*|start(FK)|end(FK)|number(FK)|snum(FK)|manuf(FK)|*/
 insert into Wears values('2013-02-15 11:22:00','2999-12-31 00:00:00',9256926,"2000",'Siemens');
 insert into Wears values('2016-02-25 12:02:00','2017-05-19 15:15:00',6,"3000",'Medtronic');
 insert into Wears values('2001-01-30 14:00:00','2003-02-16 19:03:00',2,"3333",'Medtronic');
