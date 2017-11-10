@@ -12,18 +12,18 @@ drop table if exists Doctor;
 drop table if exists Patient;
 
 create table Patient (
-	patient_id int unsigned,
+	number int unsigned,
 	name varchar(255),
 	birthday DATE,
 	address varchar(255),
-	primary key(patient_id) 
+	primary key(number) 
 );
 
 create table Doctor(
-	patient_id int unsigned,
+	number int unsigned,
 	doctor_id int unsigned,
 	primary key(doctor_id),
-	foreign key(patient_id) references Patient(patient_id)
+	foreign key(number) references Patient(number)
 );
 
 create table Device(
@@ -44,37 +44,37 @@ create table Sensor(
 create table Reading(
 	snum varchar(255),
 	manuf varchar(255),
-	date_of_reading DATETIME,
+	datetime DATETIME,
 	value numeric(10,2),
-	primary key(snum, manuf, date_of_reading),
+	primary key(snum, manuf, datetime),
 	foreign key(snum, manuf) references Sensor(snum, manuf)
 );
 
 create table Period(
-	start_date DATETIME,
-	end_date DATETIME,
-	primary key(start_date, end_date)
+	start DATETIME,
+	end DATETIME,
+	primary key(start, end)
 );
 
 create table Wears(
-	start_date DATETIME,
-	end_date DATETIME,
+	start DATETIME,
+	end DATETIME,
 	patient int unsigned,
 	snum varchar(255),
 	manuf varchar(255),
-	primary key(start_date, end_date, patient),
-	foreign key(start_date, end_date) references Period(start_date, end_date),
-	foreign key(patient) references Patient(patient_id),
+	primary key(start, end, patient),
+	foreign key(start, end) references Period(start, end),
+	foreign key(patient) references Patient(number),
 	foreign key(snum, manuf) references Device(serialnum, manufacturer)
 );
 
 create table Request(
-	request_number int unsigned,
+	number int unsigned,
 	patient_id int unsigned,
 	doctor_id int unsigned,
-	date_of_request DATE,
-	primary key(request_number),
-	foreign key(patient_id) references Patient(patient_id),
+	date DATE,
+	primary key(number),
+	foreign key(patient_id) references Patient(number),
 	foreign key(doctor_id) references Doctor(doctor_id)
 );
 /*|request_numb|descprition|date|docID(FK)|manuf(FK)|serial(FK)|*/
@@ -82,12 +82,12 @@ create table Request(
 create table Study(
 	request_number int unsigned,
 	description varchar(255),
-	date_of_study DATE,
+	date DATE,
 	doctor_id int unsigned,
 	manufacturer varchar(255),
 	serial_number varchar(255),
 	primary key(request_number, description),
-	foreign key(request_number) references Request(request_number	),
+	foreign key(request_number) references Request(number),
 	foreign key(doctor_id) references Doctor(doctor_id),
 	foreign key(serial_number, manufacturer) references Device(serialnum, manufacturer)
 );
@@ -113,14 +113,15 @@ create table Region(
 	series_id int unsigned,
 	elem_index int unsigned,
 	x1 FLOAT(4, 3),
-	x2 FLOAT(4, 3),
 	y1 FLOAT(4, 3),
+	x2 FLOAT(4, 3),
 	y2 FLOAT(4, 3),
 	primary key(series_id, elem_index, x1, x2, y1, y2),
 	foreign key(series_id, elem_index) references Element(series_id, elem_index)
 );
 
 /*|number|name|bday|address|*/
+
 insert into Patient values(1,'Ruben', '1995-02-25', 'Av. do Tecnico');
 insert into Patient values(6,'Francisco', '1989-12-19', 'Av. da Liberdade');
 insert into Patient values(2,'Andre', '1912-04-15', 'Rua oliveirinha');
@@ -157,7 +158,7 @@ insert into Device values("443",'Samsung','Echo123');
 /*|snum(FK)|manuf(fkey)|units|*/
 insert into Sensor values("3000",'Medtronic','glucose in mmol/L');
 insert into Sensor values("3333",'Medtronic','glucose in mmol/L');
-insert into Sensor values("2000",'Siemens','systolic pressure in mmHg');
+insert into Sensor values("2000",'Siemens','LDL cholesterol in mg/dL');
 insert into Sensor values("4552",'Samsung','LDL cholesterol in mg/dL');
 insert into Sensor values("1234",'LG','LDL cholesterol in mg/dL');
 insert into Sensor values("3345",'LG','LDL cholesterol in mg/dL');
@@ -166,14 +167,16 @@ insert into Sensor values("3345",'LG','LDL cholesterol in mg/dL');
 /*snum(FK)|manuf(FK)|datetime|value|*/
 insert into Reading values("3000",'Medtronic','2017-02-16 19:03:00',5);
 insert into Reading values("3000",'Medtronic','2017-02-17 11:03:00',6);
+insert into Reading values("3000",'Medtronic','2017-02-20 11:03:00',250);
 insert into Reading values("3333",'Medtronic','2002-05-11 12:01:10',10);
-insert into Reading values("2000",'Siemens','2013-02-16 11:03:10',20);
+insert into Reading values("2000",'Siemens','2017-09-16 11:03:10',202);
 insert into Reading values("2000",'Siemens','2013-02-16 11:23:01',1);
 insert into Reading values("4552",'Samsung','2010-02-16 12:13:06',60);
 insert into Reading values("3345",'LG','2017-11-10 18:24:00',250);
 insert into Reading values("3345",'LG','2017-10-10 21:22:22',201);
 insert into Reading values("3345",'LG','2017-10-11 22:23:02',100);
 insert into Reading values("1234",'LG','2017-09-02 12:00:22',300);
+insert into Reading values("1234",'LG','2017-09-22 12:00:22',340);
 
 /*Start|END*/
 insert into Period values('2012-02-23 11:02:00','2013-02-23 09:10:00');
@@ -188,7 +191,7 @@ insert into Period values('2013-02-15 11:22:00','2999-12-31 00:00:00');	/*until 
 insert into Period values('2017-02-02 14:00:00','2999-12-31 00:00:00');	/*until now, according to project1*/
 insert into Period values('2017-03-11 10:11:00','2017-09-21 08:11:00');
 
-/*|start(FK)|end(FK)|patient_id(FK)|snum(FK)|manuf(FK)|*/
+/*|start(FK)|end(FK)|number(FK)|snum(FK)|manuf(FK)|*/
 insert into Wears values('2013-02-15 11:22:00','2999-12-31 00:00:00',9256926,"2000",'Siemens');
 insert into Wears values('2016-02-25 12:02:00','2017-05-19 15:15:00',6,"3000",'Medtronic');
 insert into Wears values('2001-01-30 14:00:00','2003-02-16 19:03:00',2,"3333",'Medtronic');
@@ -201,24 +204,24 @@ insert into Wears values('2017-02-02 14:00:00','2999-12-31 00:00:00',1,"3345",'L
 /*|number|patientID(FK)|doctorID(FK)|date|*/
 insert into Request values(874, 2, 12345,'2002-02-11');
 insert into Request values(86351, 9256926, 4477, '2014-10-23');
-insert into Request values(126, 6, 8246527,'2017-02-11');
+insert into Request values(126, 6, 8246527,'2016-02-11');
 insert into Request values(9769, 7465, 1996, '2009-10-23');
-insert into Request values(111,1,5555,'2017-05-05');
-insert into Request values(112,1,5555,'2016-08-05');
-insert into Request values(128,6,8246527,'2017-02-23');
+insert into Request values(111,1,5555,'2016-05-05');
+insert into Request values(112,1,5555,'2017-08-05');
+insert into Request values(128,6,8246527,'2016-02-23');
 insert into Request values(1000,7465,1996,'2010-10-01');
 
 /*Study dates >= request dates*/
-/*Doc que receitou o exame n„o o pode performar*/
+/*Doc que receitou o exame n√£o o pode performar*/
 /*|request_numb|descprition|date|docID(FK)|manuf(FK)|serial(FK)|*/
 insert into Study values(86351,'X-ray left foot','2014-10-24',8246527,'Siemens',"20");
-insert into Study values(126,'MRI scan', '2017-02-15',1996,'Medtronic',"31");
+insert into Study values(126,'MRI scan', '2016-02-15',1996,'Medtronic',"31");
 insert into Study values(874,'Blood analysis','2002-03-01',1996,'Medtronic',"443");
 insert into Study values(9769,'Echography right arm','2009-10-27',76592659,'Samsung',"31");
 insert into Study values(1000,'Echography right arm','2010-10-27',76592659,'Samsung',"443");
-insert into Study values(111,'Blood analysis', '2017-05-20',1996,'Medtronic',"443");
-insert into Study values(112,'MRI scan','2016-08-22',8246527,'Medtronic','31');
-insert into Study values(128,'Blood analysis','2017-02-27',76592659,'Medtronic',"443");
+insert into Study values(111,'Blood analysis', '2016-05-20',1996,'Medtronic',"443");
+insert into Study values(112,'MRI scan','2017-08-22',8246527,'Medtronic','31');
+insert into Study values(128,'Blood analysis','2016-02-27',76592659,'Medtronic',"443");
 
 /*All these series must be refered at least once in the elements table*/
 /*|id|name|url|request_no(FK)|descprition(FK)|*/
@@ -247,7 +250,7 @@ insert into Element values(6000,1);
 insert into Element values(6000,2);
 insert into Element values(7000,1);
 insert into Element values(7000,2);	
-insert into Element values(7000,3);	
+insert into Element values(7000,3);		
 insert into Element values(4001,2);
 
 /*|series_id(FK)|elem_index(FK)|x1|y1|x2|y2|*/
@@ -269,6 +272,6 @@ insert into Region values(7000,3,0.1,0.4,0.4,0.6);
 insert into Region values(4001,2,0.2,0.5,0.4,0.7);
 
 /*CENAS A TER CUIDADO */
-/*foreign keys --> os tipos tÍm de bater certo, se È int de um lado tem de ser int do outro (n pode ser long int)
+/*foreign keys --> os tipos t√™m de bater certo, se √© int de um lado tem de ser int do outro (n pode ser long int)
 * foreign keys (x,y) references aaaa(x,y), a ordem x,y tem de bater certo com a primary key de aaaa (a ordem x,y tem que ser igual em todo o lado)
-* a ordem do drop tables tem que estar certo se n„o d· erros, apagar primeiro as tabelas com foreign keys*/
+* a ordem do drop tables tem que estar certo se n√£o d√° erros, apagar primeiro as tabelas com foreign keys*/
