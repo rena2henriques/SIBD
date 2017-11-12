@@ -199,7 +199,6 @@ insert into Wears values('2009-03-11 10:11:00','2010-03-21 08:11:00',7465,"4552"
 insert into Wears values('2017-03-11 10:11:00','2017-09-21 08:11:00',27233,"1234",'LG');
 insert into Wears values('2017-02-02 14:00:00','2999-12-31 00:00:00',1,"3345",'LG');
 
-
 /*Conformidade entre a request e quem segue o patient*/
 /*|number|patientID(FK)|doctorID(FK)|date|*/
 insert into Request values(874, 2, 12345,'2002-02-11');

@@ -18,27 +18,12 @@ PERGUNTA 4:
 
 select name 
 from Patient as p 
-where not exists ( select serial_number
-	from Study as d where manufacturer='Medtronic' 
-	and serial_number not in ( select serial_number
-		 from Study as s natural join Request as r natural join  Patient as p2 
-		 where p.patient_id=p2.patient_id and manufacturer='Medtronic'
-		 and YEAR(current_date)-YEAR(date_of_study)=1));
-
-OU 
-SÓ DEU COM WHERE, NAO SEI BEM PORQUE! <-- acho que não dá para fazer natural join do request com o study porque eles têm também a coluna doctor_id 
-									<--igual e isso depois deve dar merda porque nós queremos que essas sejam diferentes??
-
-select name 
-from Patient as p 
 where not exists ( select serial_number 
-	from Study as d where manufacturer='Medtronic' 
+	from Study where manufacturer='Medtronic' 
 	and serial_number not in ( select serial_number
-		 from Study as s, Request as r, Patient as p2 
-		 where s.request_number=r.number and p2.number=r.patient_id and p.number=p2.number and manufacturer='Medtronic'
-		 and YEAR(current_date)-YEAR(s.date)=1));
-
---> Parece estar a funcionar
+		from Study as s, Request as r, Patient as p2 
+		where s.request_number=r.number and p2.number=r.patient_id and p.number=p2.number and manufacturer='Medtronic'
+		and YEAR(current_date)-YEAR(s.date)=1));
 
 Pergunta 5:
 
@@ -64,13 +49,13 @@ delimiter ;
 
 delimiter $$
 
-create trigger check_doctor_updatebefore update on Study
+create trigger check_doctor_update before update on Study
 for each row
 begin
 	if new.doctor_id in (
 	select doctor_id 
 	from Request 
-	where Request.request_number=old.request_number) then
+	where Request.number=old.request_number) then
 		call error_doctor_not_allowed();
 	end if;
 
@@ -84,16 +69,29 @@ PARA TESTAR::
 insert into Wears values('2014-02-15 11:22:00','2999-12-31 00:00:00',9256926,"2000",'Siemens');
 insert into Wears values('2014-02-15 11:22:00','2999-12-31 00:00:00',1,"2000",'Siemens');
 
+ASSUMIMOS QUE UM DEVICE NÃO PODE SER USADO POR MAIS DO QUE UM PACIENTE NO MESMO PERIODO DE TEMPO
+E QUE UM PACIENTE PODE USAR VÁRIOS DEVICES NO MESMO PERIODO DE TEMPO
+
+ESTE TRIGGER GARANTE QUE O UTILIZADOR NÃO INSERE VÁRIAS VEZES O MESMO DEVICE EM PERIODOS SOBREPOSTOS,
+TAL COMO GARANTE QUE SE UM DEVICE ESTIVER A SER UTILIZADO POR UM CERTO PACIENTE, ESTE NÃO PODE SER ATRIBUIDO
+A UM OUTRO PACIENTE NO MESMO PERIODO DE TEMPO.
+
+Para evitar escrever todos os casos de sobreposição entre periodos de tempo, decidiu-se testar antes os casos em que 
+não há sobreposição e depois negar esta condição. Não pode haver sobreposição quando a data de inicio de um periodo 
+é posterior à data de fim de outro, nem quando a data de fim de um periodo é anterior à data de inicio de outro. 
+Se existir alguma data de inicio e de fim para um certo Device que se sobreponha com o periodo de tempo da nova inserção,
+então é feita uma chamada a erro impedindo que ocorra a inserção (ou atualização).
+
 delimiter $$
 
 create trigger check_overlapping_periods before insert on Wears
 for each row
 begin 
 	if exists (
-	select start_date,end_date
+	select start, end
 	from Wears 
 	where Wears.snum=new.snum and Wears.manuf=new.manuf 
-	and not (datediff(new.start_date,Wears.end_date)>=0 or datediff(new.end_date,Wears.start_date)<0)) then
+	and not (datediff(new.start,Wears.end)>=0 or datediff(new.end,Wears.start)<0)) then
 		signal sqlstate '45000'	set message_text =	'Overlapping Periods';
 	end if;
 
@@ -103,7 +101,7 @@ delimiter;
 
 delimiter $$
 
-create trigger check_overlapping_periods before update on Wears
+create trigger check_overlapping_periods_update before update on Wears
 for each row
 begin 
 	if exists (
@@ -178,8 +176,8 @@ begin
 	return exists(select rA.series_id, rA.elem_index
 		from Region as rA
 		where rA.series_id=idA and rA.elem_index=indexA 
-		and ((rA.x2>=rA.x1 and not (rA.x2<=x1B or rA.x1>=x2B)) or (rA.x1>rA.x2  and  not(rA.x1<=x1B or rA.x2>=x2B)))
-		and ((rA.y2>=rA.y1 and not (rA.y2<=y1B or rA.y1>=y2B))or (rA.y1>rA.y2 and not ( rA.y1<=y1B or rA.y2>=y2B))));
+		and ((rA.x2>=rA.x1 and not (rA.x2<=x1B or rA.x1>=x2B)) or (rA.x1>rA.x2 and not(rA.x1<=x1B or rA.x2>=x2B)))
+		and ((rA.y2>=rA.y1 and not (rA.y2<=y1B or rA.y1>=y2B)) or (rA.y1>rA.y2 and not ( rA.y1<=y1B or rA.y2>=y2B))));
 end$$
 delimiter ;
 
