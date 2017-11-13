@@ -25,6 +25,7 @@ begin
 		return FALSE; -- the regions don't overlap
 	else
 		return TRUE; -- the regions overlap
+	end if;
 end
 
 
@@ -37,7 +38,7 @@ begin
 		where r.series_id = series_id and r.elem_index = index and checkCoordinates(r.x1, r.x2, r.y1, r.y2, x1, x2, xy, x2));
 	-- checkCoordinates is a functions that tests if x1 < x2 and y1 < y2 and if the coordinates overlap
 end$$
-
+	
 delimiter;	
 
 
