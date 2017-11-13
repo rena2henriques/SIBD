@@ -26,8 +26,11 @@ begin
 	else
 		return TRUE; -- the regions overlap
 	end if;
-end
+end$$
+	
+delimiter;
 
+delimiter$$
 
 create function region_overlaps_element(series_id varchar(255), index int unsigned, x1 FLOAT(4, 3), x2 FLOAT(4, 3), y1 FLOAT(4, 3), y2 FLOAT(4, 3))
 returns BOOLEAN
