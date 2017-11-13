@@ -49,7 +49,7 @@ begin
 	if exists ( 
 		select start_date, end_date
 		from Wears
-		where Wears.snum = new.snum and Wears.manuf = new.manuf 
+		where Wears.snum = new.snum and Wears.manuf = new.manuf
 		and not ( datediff(new.start_date, Wears.end_date) >= 0 or datediff(new.end_date, Wears.start_date) <= 0)) then
 		signal sqlstate '45000' set message_text = 'overlapping Periods”';
 	end if;
@@ -58,6 +58,20 @@ end $$
 delimiter;
 
 
+delimiter $$
 
+create trigger check_device before update on Wears
+for each row
+begin
+	if exists ( 
+		select start_date, end_date
+		from Wears
+		where Wears.snum = new.snum and Wears.manuf = new.manuf and Wears.start_date != old.start_date and Wears.end_date != old.end_date
+		and not ( datediff(new.start_date, Wears.end_date) >= 0 or datediff(new.end_date, Wears.start_date) <= 0)) then
+		signal sqlstate '45000' set message_text = 'overlapping Periods”';
+	end if;
+end $$ 
+
+delimiter;
 
 

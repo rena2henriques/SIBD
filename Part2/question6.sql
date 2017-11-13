@@ -3,6 +3,8 @@
 Element	A,	and	the	coordinates	(x1,	y1,	x2,	y2)	of	a	Region	B,	returns	true	if	any	region	
 of	the	element	A	overlaps	with	Region	B,	and	false	otherwise.	*/
 
+delimiter$$
+
 create function checkCoordinates(Ax1 FLOAT(4, 3), Ax2 FLOAT(4, 3), Ay1 FLOAT(4,3), Ay2 FLOAT(4,3), Bx1 FLOAT(4, 3), Bx2 FLOAT(4, 3), By1 FLOAT(4,3), By2 FLOAT(4,3))
 return BOOLEAN
 begin
@@ -34,13 +36,15 @@ begin
 		from Region as r 
 		where r.series_id = series_id and r.elem_index = index and checkCoordinates(r.x1, r.x2, r.y1, r.y2, x1, x2, xy, x2));
 	-- checkCoordinates is a functions that tests if x1 < x2 and y1 < y2 and if the coordinates overlap
-end	
+end$$
+
+delimiter;	
 
 
-Para construir a função de teste em relação à sobreposição de regiões considerou-se que as coordenadas do ponto 1 (x1, y1) não têm que 
+/*Para construir a função de teste em relação à sobreposição de regiões considerou-se que as coordenadas do ponto 1 (x1, y1) não têm que 
 ser necessáriamente inferiores às coordenadas do ponto 2 (x2, y2). Deste modo, foi necessário executar este teste e caso alguma da coordenada
 do ponto 2 seja inferior à do ponto 1, então troca as suas posições e só depois é que se realiza o teste de sobreposição.
 
 Como há muitas maneiras de duas regiões estarem sobrepostas, para simplifiar o código, decidiu-se averiguar apenas os casos em que as
 regiões não estão sobrepostas. Caso as regiões a testar não estejam nos quatro casos de não sobreposição, então implica que têm que ser
-sobrepostas.
+sobrepostas.*/

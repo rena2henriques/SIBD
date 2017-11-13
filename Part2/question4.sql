@@ -33,15 +33,4 @@ where not exists (
 		and datediff(current_date, s.date_of_study) < 365 and s.manufacturer="Medtronic")
 );
 
-select name
-from Patient as p1
-where not exists (
-select s1.serial_number
-from Study as s1
-where s1.manufacturer="Medtronic" and s1.serial_number not in (
-select s2.serial_number
-from Patient as p2, Study as s2, Request as r
-where p1.patient_id=p2.patient_id and p2.patient_id=r.patient_id and r.request_number=s.request_number 
-and datediff(current_date, s.date_of_study) < 365 and s.manufacturer="Medtronic"));
-
-(YEAR(current_date)-YEAR(s.date_of_study)) = 1
+-- (YEAR(current_date)-YEAR(s.date_of_study)) = 1
