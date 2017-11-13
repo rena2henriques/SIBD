@@ -5,6 +5,8 @@ of	the	element	A	overlaps	with	Region	B,	and	false	otherwise.	*/
 
 delimiter$$
 
+drop function if exists checkCoordinates();
+
 create function checkCoordinates(Ax1 FLOAT(4, 3), Ax2 FLOAT(4, 3), Ay1 FLOAT(4,3), Ay2 FLOAT(4,3), Bx1 FLOAT(4, 3), Bx2 FLOAT(4, 3), By1 FLOAT(4,3), By2 FLOAT(4,3))
 return BOOLEAN
 begin
@@ -26,11 +28,9 @@ begin
 	else
 		return TRUE; -- the regions overlap
 	end if;
-end$$
-	
-delimiter;
+end
 
-delimiter$$
+drop function if exists region_overlaps_element();
 
 create function region_overlaps_element(series_id varchar(255), index int unsigned, x1 FLOAT(4, 3), x2 FLOAT(4, 3), y1 FLOAT(4, 3), y2 FLOAT(4, 3))
 returns BOOLEAN
