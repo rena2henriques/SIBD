@@ -45,7 +45,7 @@
 		
 		// FALTA TESTAR SE ESTÃO ORDENADOS, NÃO ME APETECEU ADICIONAR DEVICES À BASE DE DADOS
 
-		$stmt = $connection->prepare("SELECT serialnum, manufacturer, model, start, end FROM Wears as w, Device as d where w.patient = :idnumber and d.serialnum = w.snum and d.manufacturer = w.manuf order by w.end asc ");
+		$stmt = $connection->prepare("SELECT serialnum, manufacturer, model, start, end FROM Wears as w, Device as d where w.patient = :idnumber and d.serialnum = w.snum and d.manufacturer = w.manuf order by w.end desc ");
 
 		$stmt->bindParam(':idnumber', $idnumber);
 
@@ -59,7 +59,7 @@
 
 		$nrows = $stmt->rowCount();
 		if ($nrows == 0) {
-			echo("<p>Patient isn't wearing any device.</p>");
+			echo("<p>Patient haven't worn any device.</p>");
 		} else {
 			echo("<table border=\"1\" cellspacing=\"5\">");
 			echo("<tr><td><strong>Serial Number</strong></td><td><strong>Manufacturer</strong></td><td><strong>Model</strong></td><td><strong>Start Date</strong></td><td><strong>End Date</strong></td></tr>");

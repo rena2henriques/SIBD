@@ -66,7 +66,7 @@ create table Request(
 	patient_id int unsigned,
 	doctor_id int unsigned,
 	date DATE,
-	primary key(number),
+	primary key(number),	
 	foreign key(patient_id) references Patient(number),
 	foreign key(doctor_id) references Doctor(doctor_id));
 

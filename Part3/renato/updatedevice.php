@@ -37,6 +37,8 @@
 				$auxEnd = $row['end'];
 			}
 
+			// PERGUNTAR AO PROF SE É PRECISO METER TRANSACTION
+
 			// UPDATING THE END DATE OF THE OLD DEVICE
 			$stmt1 = $connection->prepare("UPDATE Wears SET end = NOW() WHERE patient = :patientid and snum = :snumOld and manuf = :manufOld");
 
@@ -44,16 +46,15 @@
 			$stmt1->bindParam(':snumOld', $snumOld);
 			$stmt1->bindParam(':manufOld', $manufOld);
 
-			$stmt1->execute();
-
 			// INSERTING THE NEW WEARABLE DATA
-			$stmt2 = $connection->prepare("INSERT INTO Wears (start, end, patient, snum, manuf) VALUES (NOW(),:endDate,:patientid, :snumNew, :manufNew)");
+			$stmt2 = $connection->prepare("INSERT INTO Wears VALUES (NOW(),:endDate,:patientid, :snumNew, :manufNew)");
 
 			$stmt2->bindParam(':patientid', $patientid);
 			$stmt2->bindParam(':snumNew', $snumNew);
 			$stmt2->bindParam(':manufNew', $manufNew);
 			$stmt2->bindParam(':endDate', $auxEnd);
 
+			$stmt1->execute();
 			$stmt2->execute();
 
 			// QUANDO CLICAR NO BOTÃO DE TROCAR PARA UM CERTO DEVICE
