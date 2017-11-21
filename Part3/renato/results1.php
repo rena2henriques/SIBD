@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html>
 <head>
 	<title>Results Question 1:</title>
@@ -27,9 +27,9 @@
 
 		$name =$_REQUEST['Name'];
 
-		$stmt = connection->prepare("SELECT * FROM Patient where name like :portion_name")
+		$stmt = $connection->prepare("SELECT * FROM Patient where name like CONCAT('%', :portion_name, '%')");	
 
-		$stmt->bindParam(':portion_name', '%$name%');
+		$stmt->bindParam(':portion_name', $name);
 
 		$stmt->execute();
 
