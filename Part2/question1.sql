@@ -89,7 +89,7 @@ create table Series(
 	base_url varchar(255),
 	request_number int unsigned,
 	description varchar(255),
-	primary key(series_id),
+	primary key(series_id),	
 	foreign key(request_number, description) references Study(request_number, description));
 
 create table Element(

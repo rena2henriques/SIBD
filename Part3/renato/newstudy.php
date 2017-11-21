@@ -38,7 +38,16 @@
 			$stmt1->bindParam(':manufacturer', $manufacturer);
 			$stmt1->bindParam(':serialnumber', $serialnumber);
 
-			if ($stmt1->execute()){
+			// O QUE É SUPOSTO METER NO SERIESID?
+			$stmt2 = $connection->prepare("INSERT INTO Series VALUES (:seriesid, :name, :base_url,:requestnumber,:description)");
+
+			$stmt2->bindParam(':seriesid', ?????);
+			$stmt2->bindParam(':name', $name);
+			$stmt2->bindParam(':base_url', myurl . '/series/' . $seriesid);
+			$stmt2->bindParam(':requestnumber', $requestnumber);
+			$stmt2->bindParam(':description', $description);
+
+			if ($stmt1->execute() && $stmt2->execute()){
 				$connection->commit();
 			 	echo("<p>Success, Study was created.</p>");
 			} else {

@@ -38,6 +38,7 @@
 			}
 
 			// PERGUNTAR AO PROF SE É PRECISO METER TRANSACTION
+			$connection->beginTransaction();
 
 			// UPDATING THE END DATE OF THE OLD DEVICE
 			$stmt1 = $connection->prepare("UPDATE Wears SET end = NOW() WHERE patient = :patientid and snum = :snumOld and manuf = :manufOld");
@@ -54,8 +55,13 @@
 			$stmt2->bindParam(':manufNew', $manufNew);
 			$stmt2->bindParam(':endDate', $auxEnd);
 
-			$stmt1->execute();
-			$stmt2->execute();
+			if ($stmt1->execute() && $stmt2->execute()){
+				$connection->commit();
+			 	echo("<p>Success, Study was created.</p>");
+			} else {
+				$connection->rollBack();
+			  	 echo 'error executing statement: ' . $stmt->error;
+			}			
 
 			// QUANDO CLICAR NO BOTÃO DE TROCAR PARA UM CERTO DEVICE
 			// TEM QUE DAR UPDATE DO END DATE DO ATUAL PARA A DATA NO MOMENTO
