@@ -13,21 +13,25 @@
 			exit();
 		}
 
-		$name =$_REQUEST['Name'];
-		$number =$_REQUEST['Number'];
-		$birthday =$_REQUEST['Birthday'];
-		$address =$_REQUEST['Address'];
+		$name =$_REQUEST['name'];
+		$number =$_REQUEST['number'];
+		$birthday =$_REQUEST['birthday'];
+		$address =$_REQUEST['address'];
 
 		$stmt = $connection->prepare("INSERT INTO Patient VALUES (:number, :name, :birthday, :address)");
 
-		$stmt->bindParam(':number', $number);
 		$stmt->bindParam(':name', $name);
+		$stmt->bindParam(':number', $number);
 		$stmt->bindParam(':birthday', $birthday);
 		$stmt->bindParam(':address', $address);
 
 		$nrows = $stmt->execute();
 
-		header('Location: listPatients.php');
+		foreach ($_REQUEST as $name => $value) {
+			echo "<p>$name = $value</p>";
+		}
+		
+		//header('Location: listPatients.php');
 
 		$connection = null;
 	?>

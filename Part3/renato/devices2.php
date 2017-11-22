@@ -27,6 +27,7 @@
 
 		$idnumber =$_REQUEST['number'];
 
+		// USELESS, JUST TO BE PRETTY
 		$stmt = $connection->prepare("SELECT name FROM Patient where number=:idnumber");
 		$stmt->bindParam(':idnumber', $idnumber);
 		$stmt->execute();
@@ -44,8 +45,9 @@
 		}
 		
 		// FALTA TESTAR SE ESTÃO ORDENADOS, NÃO ME APETECEU ADICIONAR DEVICES À BASE DE DADOS
+		// É preciso imprimir o modelo???
 
-		$stmt = $connection->prepare("SELECT serialnum, manufacturer, model, start, end FROM Wears as w, Device as d where w.patient = :idnumber and d.serialnum = w.snum and d.manufacturer = w.manuf order by w.end desc ");
+		$stmt = $connection->prepare("SELECT snum, manuf, start, end FROM Wears as w where w.patient = :idnumber order by w.end desc ");
 
 		$stmt->bindParam(':idnumber', $idnumber);
 
@@ -62,17 +64,15 @@
 			echo("<p>Patient haven't worn any device.</p>");
 		} else {
 			echo("<table border=\"1\" cellspacing=\"5\">");
-			echo("<tr><td><strong>Serial Number</strong></td><td><strong>Manufacturer</strong></td><td><strong>Model</strong></td><td><strong>Start Date</strong></td><td><strong>End Date</strong></td></tr>");
+			echo("<tr><td><strong>Serial Number</strong></td><td><strong>Manufacturer</strong></td><td><strong>Start Date</strong></td><td><strong>End Date</strong></td></tr>");
 			foreach($stmt as $row) {
 				
 				if( strcmp($row['end'], date("Y-m-d H:i",time())) > 0){
 					//echo(date("Y-m-d H:i",time()) . "\n");
 					echo("<tr><td><strong>");
-					echo($row['serialnum']);
+					echo($row['snum']);
 					echo("</strong></td><td>");
-					echo($row['manufacturer']);
-					echo("</td><td>");
-					echo($row['model']);
+					echo($row['manuf']);
 					echo("</td><td>");
 					echo($row['start']);
 					echo("</td><td>");
@@ -80,16 +80,14 @@
 					echo("</td>");
 					echo("<td><a href=\"replacedev.php?patient=");
 					echo($idnumber . "&serialnum=");
-					echo($row['serialnum'] . "&manufacturer=");
-					echo($row['manufacturer']);
+					echo($row['snum'] . "&manufacturer=");
+					echo($row['manuf']);
 					echo("\">Replace</a></td>");
 				} else {
 					echo("<tr><td>");
-					echo($row['serialnum']);
+					echo($row['snum']);
 					echo("</td><td>");
-					echo($row['manufacturer']);
-					echo("</td><td>");
-					echo($row['model']);
+					echo($row['manuf']);
 					echo("</td><td>");
 					echo($row['start']);
 					echo("</td><td>");

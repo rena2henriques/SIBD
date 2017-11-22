@@ -32,7 +32,7 @@
 		// Select all the devices that aren't being worn at the moment
 		// I DONT THINK THIS IS DONE IN THE MOST CORRECT WAY
 
-		$stmt = $connection->prepare("SELECT * FROM Device as d WHERE manufacturer = :manuf and serialnum not in (SELECT snum FROM Wears WHERE datediff(Wears.end, NOW()) > 0)");
+		$stmt = $connection->prepare("SELECT * FROM Device as d WHERE manufacturer = :manuf and serialnum not in (SELECT snum FROM Wears WHERE manuf = :manuf and datediff(Wears.end, NOW()) > 0)");
 
 		// TESTAR SE ISTO ESTÁ A FUNCIONAR, A DATABASE NÃO TEM DEVICES DA MESMA MARCA SUFICIENTES PARA TESTAR
 

@@ -5,7 +5,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 </head>
 <body>
-	<h1 style="font-family: 'Indie Flower', cursive;">Paulo's Clinic:</h1>
+	<h1 style="font-family: 'Indie Flower', cursive;">Clinic Database:</h1>
 
 	<?php
 		ini_set('display_errors', 'On');
@@ -31,7 +31,6 @@
 		$stmt = $connection->prepare("SELECT * FROM Patient where name like CONCAT('%', :portion_name, '%')");	
 
 		$stmt->bindParam(':portion_name', $name);
-
 		$stmt->execute();
 
 		if ($stmt == FALSE) {
@@ -42,7 +41,19 @@
 		
 		$nrows = $stmt->rowCount();
 		if ($nrows == 0) {
-			header('Location: newpatient.php');
+
+			echo("<p>Sorry, patient wasn't found on the database.</p>");
+
+			echo("<form action='newpatient.php' method='post'>");
+			echo("<fieldset> <legend>Insert new patient</legend>");
+			echo("<p>name: <input type='text' name='name'/></p>");
+			echo("<p>number: <input type='text' name='number'/></p>");
+			echo("<p>birthday: <input type='text' name='birthday'/></p>");
+			echo("<p>address: <input type='text' name='address'/></p>");
+			echo("<p><input type='submit' value='Submit'/></p>");
+			echo("</fieldset>");
+			echo("</form>");
+
 		} else {
 			echo "<h3>Results Found:</h3>";
 			echo("<table border=\"1\" cellspacing=\"5\">");
