@@ -61,7 +61,7 @@
 
 			foreach($stmt as $row) {
 				echo("<tr><td>");
-				echo("<a href=\"devices2.php?number=");
+				echo("<a href=\"listDevices.php?number=");
 				echo($row['number']);
 				echo("\">{$row['name']}</a>");
 				echo("</td><td>");

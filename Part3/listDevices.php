@@ -5,7 +5,7 @@
 	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 </head>
 <body>
-	<h1 style="font-family: 'Indie Flower', cursive;">Paulo's Clinic:</h1>
+	<h1 style="font-family: 'Indie Flower', cursive;">Clinic Database:</h1>
 
 	<?php
 		ini_set('display_errors', 'On');
@@ -27,32 +27,11 @@
 
 		$idnumber =$_REQUEST['number'];
 
-		// USELESS, JUST TO BE PRETTY. Decide if worth it
-		/*$stmt = $connection->prepare("SELECT name FROM Patient where number=:idnumber");
-		$stmt->bindParam(':idnumber', $idnumber);
-		$stmt->execute();
-
-		if ($stmt == FALSE) {
-			$info = $connection->errorInfo();
-			echo("<p>Error: {$info[2]}</p>");
-			exit();
-		}
-	
-		foreach ($stmt as $row) {
-			echo("<h3>List of devices worn by ");
-			echo($row['name']);
-			echo (":</h3>");
-		}*/
-
-		echo("<h3>List of devices worn by Patient nº" . $idnumber . ":");
+		echo("<h3>List of devices worn by Patient nr. " . $idnumber . ":</h3>");
 		
-		// FALTA TESTAR SE ESTÃO ORDENADOS, NÃO ME APETECEU ADICIONAR DEVICES À BASE DE DADOS
-		// É preciso imprimir o modelo???
-
 		$stmt = $connection->prepare("SELECT snum, manuf, start, end FROM Wears where patient = :idnumber order by end desc ");
 
 		$stmt->bindParam(':idnumber', $idnumber);
-
 		$stmt->execute();
 
 		if ($stmt == FALSE) {
@@ -69,22 +48,21 @@
 			echo("<tr><td><strong>Serial Number</strong></td><td><strong>Manufacturer</strong></td><td><strong>Start Date</strong></td><td><strong>End Date</strong></td></tr>");
 			foreach($stmt as $row) {
 				
-				if( strcmp($row['end'], date("Y-m-d H:i",time())) > 0){
-					//echo(date("Y-m-d H:i",time()) . "\n");
+				if( strcmp($row['end'], date("Y-m-d H:i:s",time())) > 0){
 					echo("<tr><td><strong>");
 					echo($row['snum']);
-					echo("</strong></td><td>");
+					echo("</strong></td><td><strong>");
 					echo($row['manuf']);
-					echo("</td><td>");
+					echo("</strong></td><td>");
 					echo($row['start']);
 					echo("</td><td>");
 					echo($row['end']);
 					echo("</td>");
-					echo("<td><a href=\"replacedev.php?patient=");
+					echo("<td><a href=\"listReplacements.php?patient=");
 					echo($idnumber . "&serialnum=");
 					echo($row['snum'] . "&manufacturer=");
 					echo($row['manuf']);
-					echo("\">Replace</a></td>");
+					echo("\"><button type='button'>Replace</button></a></td>");
 				} else {
 					echo("<tr><td>");
 					echo($row['snum']);
@@ -103,9 +81,6 @@
 
 		$connection = null;
 	?>
-
-
-
 
 </body>
 </html>
