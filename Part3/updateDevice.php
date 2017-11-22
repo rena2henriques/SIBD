@@ -35,7 +35,7 @@
 			$stmt->execute();
 
 			if ($stmt == FALSE) {
-				$info = $connection->errorInfo();
+				$info = $stmt->errorInfo();
 				echo("<p>Error query dates:{$info[2]}</p>");
 				exit();
 			}

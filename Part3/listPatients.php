@@ -34,7 +34,7 @@
 		$stmt->execute();
 
 		if ($stmt == FALSE) {
-			$info = $connection->errorInfo();
+			$info = $stmt->errorInfo();
 			echo("<p>Error: {$info[2]}</p>");
 			exit();
 		}
@@ -57,7 +57,7 @@
 		} else {
 			echo "<h3>Results Found:</h3>";
 			echo("<table border=\"1\" cellspacing=\"5\">");
-			echo("<tr><td><strong>Name</strong></td><td><strong>ID number</strong></td><td><strong>Birthday</strong></td><td><strong>Address</strong></td></tr>");
+			echo("<tr><td><strong>Name</strong></td><td><strong>ID number</strong></td><td><strong>Birthday</strong></td><td><strong>Address</strong></td><td><strong>Region</strong></td></tr>");
 
 			foreach($stmt as $row) {
 				echo("<tr><td>");
@@ -70,9 +70,13 @@
 				echo($row['birthday']);
 				echo("</td><td>");
 				echo($row['address']);
+				echo("</td><td>");
+				echo("<a href=\"formRegions.php?number=");
+				echo($row['number']);
+				echo("\"><button type='button'>Insert</button></a>");
 				echo("</td></tr>");
-
 			}
+
 			echo("</table>");
 		}
 

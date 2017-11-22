@@ -27,6 +27,12 @@
 
 		$nrows = $stmt->execute();
 
+		if ($stmt == FALSE) {
+			$info = $stmt->errorInfo();
+			echo("<p>Error: {$info[2]}</p>");
+			exit();
+		}
+
 		foreach ($_REQUEST as $name => $value) {
 			echo "<p>$name = $value</p>";
 		}
