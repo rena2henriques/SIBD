@@ -67,19 +67,34 @@
 
 			foreach($stmt as $row){
 
-				if($row['x1'] > $row['x2']){
-					$aux = $row['x1'];
-					$row['x1'] = $row['x2'];
-					$row['x2'] = $aux; 
+				$x1_last = $row['x1'];
+				$y1_last = $row['y1'];
+				$x2_last = $row['x2'];
+				$y2_last = $row['y2'];
+				
+
+				if($x1_last > $x2_last){
+					$aux = $x1_last;
+					$x1_last = $x2_last;
+					$x2_last = $aux; 
 				}
 
-				if($row['y1'] > $row['y2']){
-					$aux = $row['y1'];
-					$row['y1'] = $row['y2'];
-					$row['y2'] = $aux; 
+				if($y1_last > $y2_last){
+					$aux = $y1_last;
+					$y1_last = $y2_last;
+					$y2_last = $aux; 
+				}
+
+				if ($x1_last >= $x2 || $x2_last <= $x1 || $y1_last >= $y2 || $y2_last <= $y1) {
+					continue;
+					// keeps searching
+				} else {
+					// prints and break, there's overlap
 				}
 
 			}
+
+			// if we got to the end and there was no overlap, then we print that message
 
 			$connection = null;
 		?>
