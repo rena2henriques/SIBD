@@ -45,7 +45,6 @@
 ?>
 			</select>
 			</p>
-			<input type="text" name="requestnumber" autofocus style="width: 50%;"  maxlength="30" placeholder="Request Number" required /><br></p>
 			<p><strong>Description:</strong>
 			<input type="text" name="description" autofocus style="width: 60%;" maxlength="255" placeholder="Description" required /><br></p>
 			<p><strong>Date:</strong>
