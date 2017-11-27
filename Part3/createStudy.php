@@ -64,6 +64,7 @@
 
 			} else {
 				$connection->rollBack();
+				echo("<p>Error, study not created.</p>");
 			  	echo 'Error executing statement: ' . $stmt1->errorInfo()[2] . ' ' . $stmt2->errorInfo()[2] ;
 			}
 			
