@@ -40,20 +40,24 @@
 		}
 		
 		$nrows = $stmt->rowCount();
+
+		// in case of not finding a patient with that name
+		// can register a new patient
 		if ($nrows == 0) {
 
 			echo("<p>Sorry, patient wasn't found on the database.</p>");
 
 			echo("<form action='newpatient.php' method='post'>");
-			echo("<fieldset> <legend>Insert new patient</legend>");
-			echo("<p>name: <input type='text' name='name'/></p>");
-			echo("<p>number: <input type='text' name='number'/></p>");
+			echo("<fieldset> <legend><strong>Insert new patient</strong></legend>");
+			echo("<p>name: <input type='text' name='name' /></p>");
+			echo("<p>number: <input type='text' name='number' required/></p>");
 			echo("<p>birthday: <input type='text' name='birthday'/></p>");
 			echo("<p>address: <input type='text' name='address'/></p>");
 			echo("<p><input type='submit' value='Submit'/></p>");
 			echo("</fieldset>");
 			echo("</form>");
 
+		// prints a table with the results
 		} else {
 			echo "<h3>Results Found:</h3>";
 			echo("<table border=\"1\" cellspacing=\"5\">");
@@ -79,6 +83,10 @@
 
 			echo("</table>");
 		}
+
+		// Button to go to home page
+		echo("<br><form action='checkPatient.html' method='post'>");
+		echo("<input type='submit' value='Home'/></form>");
 
 		$connection = null;
 	?>

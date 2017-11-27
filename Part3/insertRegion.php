@@ -5,12 +5,14 @@
 	<link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
 </head>
 <body>
-	<h1 style="font-family: 'Indie Flower', cursive;">Clinic Database:</h1>
+	<h1 style="font-family: 'Indie Flower', cursive;" href="checkPatient.html">Clinic Database:</h1>
 
 	<?php
 			$host = "db.tecnico.ulisboa.pt";
-			$user = "ist181669";
-			$pass = "kdgn4758";
+
+			$user = "ist181588";
+			$pass = "gjzf1955";
+
 			$dsn = "mysql:host=$host;dbname=$user";
 
 			try {
@@ -51,7 +53,7 @@
 			}
 			
 			if($stmt->rowCount() > 0){
-				echo("<p>Row succssefully inserted </p>");	
+				echo("<p>Row successfully inserted </p>");	
 			}
 			else {
 				echo("<p> Error inserting new Region </p>");
@@ -85,19 +87,28 @@
 			//se não houver nenhum study acho que o gajo não entra no foreach, e como esta flag continua a 0, dá new region of interest, não sei se é isso o suposto
 			$flag_overlap = 0;
 			foreach($stmt as $row){
+
 				if($x1 == $row['x1'] and $x2 == $row['x2'] and $y1 == $row['y1'] and $y2 == $row['y2'] ) {
 					continue; //do not compare the newly inserted region with itself, goto next row
 				}
+
 				if($row['x1'] > $row['x2']){
 					$aux = $row['x1'];
 					$row['x1'] = $row['x2'];
 					$row['x2'] = $aux; 
 				}
 
-				if($row['y1'] > $row['y2']){
-					$aux = $row['y1'];
-					$row['y1'] = $row['y2'];
-					$row['y2'] = $aux; 
+				if($y1_last > $y2_last){
+					$aux = $y1_last;
+					$y1_last = $y2_last;
+					$y2_last = $aux; 
+				}
+
+				if ($x1_last >= $x2 || $x2_last <= $x1 || $y1_last >= $y2 || $y2_last <= $y1) {
+					continue;
+					// keeps searching
+				} else {
+					// prints and break, there's overlap
 				}
 				
 				if($x1 >= $row['x2'] or $x2 <= $row['x1'] or $y1 >= $row['y2'] or $y2 <= $row['y1']) { //there is no overlapping for this region
@@ -107,12 +118,17 @@
 					break;	//first overlapping, no need to continue
 				}
 			}
+			// if we got to the end and there was no overlap, then we print that message
 			if($flag_overlap == 0) {
 				echo("<p>There is a new region of interest</p>");
 			}
 			else {
 				echo("<p>No new region of interest </p>");
 			}
+
+			// Button to go to home page
+			echo("<br><form action='checkPatient.html' method='post'>");
+			echo("<input type='submit' value='Home'/></form>");
 
 			$connection = null;
 		?>

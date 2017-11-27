@@ -27,17 +27,20 @@
 
 		$nrows = $stmt->execute();
 
-		if ($stmt == FALSE) {
+		if ($stmt ==  FALSE) {
 			$info = $stmt->errorInfo();
 			echo("<p>Error: {$info[2]}</p>");
 			exit();
 		}
 
-		foreach ($_REQUEST as $name => $value) {
-			echo "<p>$name = $value</p>";
+		if ($nrows == 0){
+			echo("<p> Error, the insertion was not successful. </p>");
+		} else {
+			echo("<p> New patient was inserted successfully. </p>");
 		}
 		
-		//header('Location: listPatients.php');
-
+		echo("<form action='checkPatient.html' method='post'>");
+		echo("<input type='submit' value='Home'/></form>");
+		
 		$connection = null;
 	?>
