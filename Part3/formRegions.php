@@ -40,16 +40,16 @@
 					echo("<p> Query Error: {$info[2]}</p>");
 					exit();
 				} else {
-					foreach($stmt as $row)
-					{
+					foreach($stmt as $row) {
 						$seriesid = $row['series_id'];
-						echo("<option value=\"$seriesid\">$seriesid</option>");
+						echo("<option value=\"$seriesid\">{$seriesid}</option>");
 					}					
 				}
 				$connection = null;
 ?>
 				</select>
 			</p>
+
 			<p><strong>Element Index:</strong>
 			<input type="text" name="elem_index" autofocus style="width: 50%;" maxlength="30" placeholder="Element Index" required /><br></p>
 			<p><strong>X1:</strong>

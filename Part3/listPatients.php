@@ -12,8 +12,8 @@
 		error_reporting(E_ALL);
 
 		$host = "db.tecnico.ulisboa.pt";
-		$user = "ist181607";
-			$pass = "laed3426";
+		$user = "ist181588";
+		$pass = "gjzf1955";
 		$dsn = "mysql:host=$host;dbname=$user";
 
 		try {
@@ -61,7 +61,7 @@
 		} else {
 			echo "<h3>Results Found:</h3>";
 			echo("<table border=\"1\" cellspacing=\"5\">");
-			echo("<tr><td><strong>Name</strong></td><td><strong>ID number</strong></td><td><strong>Birthday</strong></td><td><strong>Address</strong></td><td><strong>Region</strong></td></tr>");
+			echo("<tr><td><strong>Name</strong></td><td><strong>ID number</strong></td><td><strong>Birthday</strong></td><td><strong>Address</strong></td><td><strong>Study</strong></td><td><strong>Region</strong></td></tr>");
 
 			foreach($stmt as $row) {
 				echo("<tr><td>");
@@ -74,6 +74,10 @@
 				echo($row['birthday']);
 				echo("</td><td>");
 				echo($row['address']);
+				echo("</td><td>");
+				echo("<a href=\"formStudy.php?number=");
+				echo($row['number']);
+				echo("\"><button type='button'>Register</button></a>");
 				echo("</td><td>");
 				echo("<a href=\"formRegions.php?number=");
 				echo($row['number']);
