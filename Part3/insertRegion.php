@@ -33,7 +33,18 @@
 			$x2 =$_REQUEST['x2'];
 			$y2 =$_REQUEST['y2'];
 
-			// Assumimos que se insere sempre
+
+			// QUERY -> get all regions of an element from the last study of the patient (if there was one)
+			$stmt1 = $connection->prepare("select x1,y1,x2,y2 from Region as r, Series as s, Study as st, Request as rq where r.series_id=s.series_id and s.request_number=st.request_number and s.description=st.description and st.request_number=rq.number and rq.patient_id= :patient_id and st.date >=all (select st1.date from Study as st1, Request as rq1 where st1.request_number=rq1.number and rq1.patient_id= :patient_id );");
+			
+			$stmt1->bindParam(':patient_id', $patient_id);
+			$result = $stmt1->execute();
+			
+			if ($result == FALSE) {
+				$info = $stmt1->errorInfo();
+				echo("<p>Error: {$info[2]}</p>");
+				exit();
+			}
 
 			$stmt = $connection->prepare("INSERT INTO Region VALUES (:series_id,:elem_index,:x1,:y1,:x2,:y2)");
 
@@ -48,84 +59,72 @@
 
 			if ($result == FALSE) {
 				$info = $stmt->errorInfo();
-				echo("<p>Error: {$info[2]}</p>");
-				exit();
-			}
-			
-			if($stmt->rowCount() > 0){
-				echo("<p>Row successfully inserted </p>");	
-			}
-			else {
 				echo("<p> Error inserting new Region </p>");
-				exit();
-			}
-			
-			// QUERY -> get all regions of an element from the last study of the patient (if there was one)
-			$stmt = $connection->prepare("select x1,y1,x2,y2 from Region as r, Series as s, Study as st, Request as rq where r.series_id=s.series_id and s.request_number=st.request_number and s.description=st.description and st.request_number=rq.number and rq.patient_id= :patient_id and st.date >=all (select st1.date from Study as st1, Request as rq1 where st1.request_number=rq1.number and rq1.patient_id= :patient_id );");
-			
-			$stmt->bindParam(':patient_id', $patient_id);
-			$result = $stmt->execute();
-			
-			if ($result == FALSE) {
-				$info = $stmt->errorInfo();
 				echo("<p>Error: {$info[2]}</p>");
 				exit();
 			}
-			// if the new region doesnt overlap with one of these, then print a message saying "new clinical evidence"
-			if($x1 > $x2) {
-				$aux = $x1;
-				$x1 = $x2;
-				$x2 = $aux; 
-			}
+			else {
+				echo("<p>Region successfully inserted </p>");	
 
-			if($y1 > $y2) {
-				$aux = $y1;
-				$y1 = $y2;
-				$y2 = $aux; 
+				// we only check if there is overlapping when the region is inserted
+
+				$nrows = $stmt1->rowCount();
+
+				// in case of not finding any regions for this patient in his last study or not finding any study
+				if ($nrows == 0) {
+					echo("<p>There are no more regions for this patient</p>");
+				}
+
+				else{
+
+					//checking if x1>y1 and x2>y2, if this condition is not met we change the coordinates
+					if($x1 > $x2) {
+					$aux = $x1;
+					$x1 = $x2;
+					$x2 = $aux; 
+					}
+
+					if($y1 > $y2) {
+						$aux = $y1;
+						$y1 = $y2;
+						$y2 = $aux; 
+					}
+
+					$flag_overlap = 0;
+
+					foreach($stmt1 as $row){
+
+						//checking if x1>y1 and x2>y2, if this condition is not met we change the coordinates
+						if($row['x1'] > $row['x2']){
+							$aux = $row['x1'];
+							$row['x1'] = $row['x2'];
+							$row['x2'] = $aux; 
+						}
+
+						if($row['y1'] > $row['y2']){
+							$aux = $row['y1'];
+							$row['y1'] = $row['y2'];
+							$row['y2'] = $aux; 
+						}
+						if($x1 >= $row['x2'] or $x2 <= $row['x1'] or $y1 >= $row['y2'] or $y2 <= $row['y1']) { //there is no overlapping for this region
+							continue; //next region if exists
+						} else {
+							$flag_overlap = 1;
+							break;	//first overlapping, no need to continue
+						}
+					}
+						// if we got to the end and there was no overlap, then we print that message
+					if($flag_overlap == 0) {
+						echo("<p>There is new clinical evidence for this patient</p>");
+					}
+					else {
+						echo("<p>No new clinical evidence </p>");
+					}
+
+				}
 			}
 			
-			//se não houver nenhum study acho que o gajo não entra no foreach, e como esta flag continua a 0, dá new region of interest, não sei se é isso o suposto
-			$flag_overlap = 0;
-			foreach($stmt as $row){
-
-				if($x1 == $row['x1'] and $x2 == $row['x2'] and $y1 == $row['y1'] and $y2 == $row['y2'] ) {
-					continue; //do not compare the newly inserted region with itself, goto next row
-				}
-
-				if($row['x1'] > $row['x2']){
-					$aux = $row['x1'];
-					$row['x1'] = $row['x2'];
-					$row['x2'] = $aux; 
-				}
-
-				if($y1_last > $y2_last){
-					$aux = $y1_last;
-					$y1_last = $y2_last;
-					$y2_last = $aux; 
-				}
-
-				if ($x1_last >= $x2 || $x2_last <= $x1 || $y1_last >= $y2 || $y2_last <= $y1) {
-					continue;
-					// keeps searching
-				} else {
-					// prints and break, there's overlap
-				}
-				
-				if($x1 >= $row['x2'] or $x2 <= $row['x1'] or $y1 >= $row['y2'] or $y2 <= $row['y1']) { //there is no overlapping for this region
-					continue; //next region if exists
-				} else {
-					$flag_overlap = 1;
-					break;	//first overlapping, no need to continue
-				}
-			}
-			// if we got to the end and there was no overlap, then we print that message
-			if($flag_overlap == 0) {
-				echo("<p>There is a new region of interest</p>");
-			}
-			else {
-				echo("<p>No new region of interest </p>");
-			}
-
+			
 			// Button to go to home page
 			echo("<br><form action='checkPatient.html' method='post'>");
 			echo("<input type='submit' value='Home'/></form>");
