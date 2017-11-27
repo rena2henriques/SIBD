@@ -25,18 +25,24 @@
 		$stmt->bindParam(':birthday', $birthday);
 		$stmt->bindParam(':address', $address);
 
-		$nrows = $stmt->execute();
+		$result = $stmt->execute();
 
-		if ($stmt ==  FALSE) {
+		if ($result == 0){
 			$info = $stmt->errorInfo();
-			echo("<p>Error: {$info[2]}</p>");
-			exit();
-		}
-
-		if ($nrows == 0){
-			echo("<p> Error, the insertion was not successful. </p>");
+			echo("<p> Error, the insertion was not successful: {$info[2]}</p>");
 		} else {
 			echo("<p> New patient was inserted successfully. </p>");
+
+			echo("<table border=\"1\" cellspacing=\"5\">");
+			echo("<tr><td><strong>Name</strong></td><td><strong>ID number</strong></td><td><strong>Birthday</strong></td><td><strong>Address</strong></td></tr>");
+			echo("<tr>");
+			foreach($_REQUEST as $value) {
+				echo("<td>");
+				echo($value);
+				echo("</td>");
+			}
+			echo("</tr>");
+			echo("</table><br>");
 		}
 		
 		echo("<form action='checkPatient.html' method='post'>");

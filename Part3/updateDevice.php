@@ -30,9 +30,9 @@
 			$stmt->bindParam(':snumOld', $snumOld);
 			$stmt->bindParam(':manuf', $manuf);
 
-			$stmt->execute();
+			$result = $stmt->execute();
 
-			if ($stmt == FALSE) {
+			if ($result == FALSE) {
 				$info = $stmt->errorInfo();
 				echo("<p>Error query dates:{$info[2]}</p>");
 				exit();
@@ -82,11 +82,12 @@
 				if($stmt1->rowCount() > 0 && $stmt2->rowCount() > 0){
 					echo("<p>Success, replacement was successful.</p>");
 				} else {
-					echo("<p>Insertion wasn't successful.</p>");
+					echo("<p>Replacement wasn't successful.</p>");
 				}
 
 			} else {
 				$connection->rollBack();
+				echo("<p>Replacement wasn't successful.</p>");
 			  	echo 'Error executing statement: ' . $stmt1->errorInfo()[2] . ' ' . $stmt2->errorInfo()	[2] ;
 			}			
 
