@@ -10,9 +10,7 @@
 	<form method="post" action="insertRegion.php" autocomplete="off">
 		<fieldset style="width: 40%;">
 		<legend><strong>Add a new region:</strong></legend>
-			<p><strong>Series ID:</strong>
-
-				<select name="seriesid">
+			
 <?php
 				$host = "db.tecnico.ulisboa.pt";
 				$user = "ist181588";
@@ -39,12 +37,27 @@
 					$info = $stmt->errorInfo();
 					echo("<p> Query Error: {$info[2]}</p>");
 					exit();
-				} else {
-					foreach($stmt as $row) {
-						$seriesid = $row['series_id'];
-						echo("<option value=\"$seriesid\">{$seriesid}</option>");
-					}					
 				}
+
+				if($stmt->rowCount() == 0){
+					echo("<p>There isn't a Series associated with this Patient.</p>");	
+
+					echo("</fieldset></form>");
+					//Button to go to home page
+					echo("<br><form action='checkPatient.html' method='post'>");
+					echo("<input type='submit' value='Home'/></form>");
+					$connection = null;
+					exit();
+				}
+
+				echo("<p><strong>Series ID:</strong>");
+				echo("<select name='seriesid'>");
+
+				foreach($stmt as $row) {
+					$seriesid = $row['series_id'];
+					echo("<option value=\"$seriesid\">{$seriesid}</option>");
+				}					
+
 				$connection = null;
 ?>
 				</select>
