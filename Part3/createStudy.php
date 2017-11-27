@@ -56,7 +56,6 @@
 			if ($stmt1->execute() && $stmt2->execute()){
 				$connection->commit();
 
-			 	if($stmt1->rowCount() > 0 && $stmt2->rowCount() > 0){
 					echo("<p>Success, study created.</p>");
 
 					echo("<p><strong>Study values inserted:</strong></p>");
@@ -80,10 +79,6 @@
 					echo("<td> $seriesname</td>");
 					echo("</tr>");
 					echo("</table><br>");
-
-				} else {
-					echo("<p>Error, study not created.</p>");
-				}
 
 			} else {
 				$connection->rollBack();
