@@ -57,7 +57,7 @@
 				echo("</td><td>");
 				echo($row['model']);
 				echo("</td><td>");
-				//BUTTON THAT UPDATES DE WEARS VALUE
+				//BUTTON THAT UPDATES THE WEARS VALUE
 				echo("<a href=\"updateDevice.php?patient=");
 				echo($idnumber . '&snumOld=');
 				echo($devId . '&manuf=');

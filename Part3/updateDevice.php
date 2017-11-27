@@ -87,6 +87,7 @@
 
 			} else {
 				$connection->rollBack();
+				echo("<p>Replacement wasn't successful.</p>");
 			  	echo 'Error executing statement: ' . $stmt1->errorInfo()[2] . ' ' . $stmt2->errorInfo()	[2] ;
 			}			
 
