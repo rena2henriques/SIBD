@@ -30,8 +30,6 @@
 		$manuf = $_REQUEST['manufacturer'];
 
 		// Select all the devices that aren't being worn at the moment
-		// I DONT THINK THIS IS DONE IN THE MOST CORRECT WAY
-
 		$stmt = $connection->prepare("SELECT serialnum, model FROM Device as d WHERE manufacturer = :manuf and serialnum not in (SELECT snum FROM Wears WHERE manuf = :manuf and timediff(Wears.end, NOW()) > 0)");
 
 		$stmt->bindParam(":manuf", $manuf);
