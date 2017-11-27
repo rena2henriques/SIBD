@@ -15,8 +15,8 @@
 				<select name="seriesid">
 <?php
 				$host = "db.tecnico.ulisboa.pt";
-				$user = "ist181607";
-				$pass = "laed3426";
+				$user = "ist181588";
+				$pass = "gjzf1955";
 				$dsn = "mysql:host=$host;dbname=$user";
 
 				try {
