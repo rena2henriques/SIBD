@@ -28,15 +28,18 @@
 				echo("</p>");
 				exit();
 			}
-			$sql = "SELECT number FROM Request ORDER BY number";
-			$result = $connection->query($sql);
-			if ($result == FALSE)
-			{
-				$info = $connection->errorInfo();
-				echo("<p>Error: {$info[2]}</p>");
-				exit();
+
+
+			$stmt = $connection->prepare("SELECT number FROM Request where patient_id=:patient_id ORDER BY number");
+			$stmt->bindParam(':patient_id', $_REQUEST['number']);
+
+			$result = $stmt->execute();
+			if ($result == 0){
+					$info = $stmt->errorInfo();
+					echo("<p> Query Error: {$info[2]}</p>");
+					exit();
 			}
-			foreach($result as $row)
+			foreach($stmt as $row)
 			{
 				$requestnumber = $row['number'];
 				echo("<option value=\"$requestnumber\">$requestnumber</option>");
