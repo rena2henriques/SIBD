@@ -48,6 +48,7 @@
 
 			// series id is unique!!
 			$stmt2->bindParam(':seriesid', $seriesid, PDO::PARAM_INT); 
+
 			$stmt2->bindParam(':name', $seriesname);
 			$stmt2->bindParam(':base_url', $base_url);
 			$stmt2->bindParam(':requestnumber', $requestnumber);
