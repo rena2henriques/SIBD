@@ -63,12 +63,12 @@
 					echo("<table border=\"1\" cellspacing=\"5\">");
 					echo("<tr><td><strong>Request Number</strong></td><td><strong>Description</strong></td><td><strong>Date</strong></td><td><strong>Doctor ID</strong></td><td><strong>Manufacturer</strong></td></td><td><strong>Serial Number</strong></td></tr>");
 					echo("<tr>");
-					echo("<td>" $requestnumber "</td>");
-					echo("<td>" $description "</td>");
-					echo("<td>" $date "</td>");
-					echo("<td>" $doctorid "</td>");
-					echo("<td>" $manufacturer "</td>");
-					echo("<td>" $serialnumber "</td>");
+					echo("<td> $requestnumber </td>");
+					echo("<td> $description </td>");
+					echo("<td> $date </td>");
+					echo("<td> $doctorid </td>");
+					echo("<td> $manufacturer </td>");
+					echo("<td> $serialnumber </td>");
 					echo("</tr>");
 					echo("</table><br>");
 
@@ -76,8 +76,8 @@
 					echo("<table border=\"1\" cellspacing=\"5\">");
 					echo("<tr><td><strong>ID</strong></td><td><strong>Name</strong></td>/tr>");
 					echo("<tr>");
-					echo("<td>" $seriesid"</td>");
-					echo("<td>" $seriesname"</td>");
+					echo("<td>$seriesid</td>");
+					echo("<td> $seriesname</td>");
 					echo("</tr>");
 					echo("</table><br>");
 
