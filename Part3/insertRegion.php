@@ -38,13 +38,7 @@
 			$stmt1 = $connection->prepare("select x1,y1,x2,y2 from Region as r, Series as s, Study as st, Request as rq where r.series_id=s.series_id and s.request_number=st.request_number and s.description=st.description and st.request_number=rq.number and rq.patient_id= :patient_id and st.date >=all (select st1.date from Study as st1, Request as rq1 where st1.request_number=rq1.number and rq1.patient_id= :patient_id );");
 			
 			$stmt1->bindParam(':patient_id', $patient_id);
-			$result = $stmt1->execute();
-			
-			if ($result == FALSE) {
-				$info = $stmt1->errorInfo();
-				echo("<p>Error: {$info[2]}</p>");
-				exit();
-			}
+			$result1 = $stmt1->execute();
 
 			$stmt = $connection->prepare("INSERT INTO Region VALUES (:series_id,:elem_index,:x1,:y1,:x2,:y2)");
 
@@ -59,14 +53,20 @@
 
 			if ($result == FALSE) {
 				$info = $stmt->errorInfo();
-				echo("<p> Error inserting new Region </p>");
-				echo("<p>Error: {$info[2]}</p>");
+				echo("<p> Error inserting new Region:</p>");
+				echo("<p>{$info[2]}</p>");
 				exit();
 			}
 			else {
 				echo("<p>Region successfully inserted </p>");	
 
 				// we only check if there is overlapping when the region is inserted
+
+				if ($result1 == FALSE) {
+					$info = $stmt1->errorInfo();
+					echo("<p>Error while obtaining the other regions of the last study of this patient: {$info[2]}</p>");
+					exit();
+				}
 
 				$nrows = $stmt1->rowCount();
 
@@ -115,10 +115,10 @@
 					}
 						// if we got to the end and there was no overlap, then we print that message
 					if($flag_overlap == 0) {
-						echo("<p>There is new clinical evidence for this patient</p>");
+						echo("<p>There is new clinical evidence for this patient </p>");
 					}
 					else {
-						echo("<p>No new clinical evidence </p>");
+						echo("<p>No new clinical evidence - the region inserted overlaps at least with one of the regions of the last study of the patient </p>");
 					}
 
 				}
