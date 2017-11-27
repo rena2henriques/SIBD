@@ -19,8 +19,6 @@
 				exit();
 			}
 
-			// METER PREPARE AQUI!!!!!!!!!!!!!!!!!!!!!!!
-
 			$patientid =$_REQUEST['patient'];
 			$snumOld =$_REQUEST['snumOld'];
 			$manuf =$_REQUEST['manuf'];
