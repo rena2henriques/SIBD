@@ -74,7 +74,7 @@
 
 					echo("<p><strong>Series values inserted:</strong></p>");
 					echo("<table border=\"1\" cellspacing=\"5\">");
-					echo("<tr><td><strong>ID</strong></td><td><strong>Name</strong></td>/tr>");
+					echo("<tr><td><strong>ID</strong></td><td><strong>Name</strong></td></tr>");
 					echo("<tr>");
 					echo("<td>$seriesid</td>");
 					echo("<td> $seriesname</td>");

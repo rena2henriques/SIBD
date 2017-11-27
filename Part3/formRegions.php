@@ -11,6 +11,7 @@
 		<fieldset style="width: 40%;">
 		<legend><strong>Add a new region:</strong></legend>
 			<p><strong>Series ID:</strong>
+<<<<<<< HEAD
 				<select name="seriesid">
 <?php
 				$host = "db.tecnico.ulisboa.pt";
@@ -49,6 +50,12 @@
 ?>
 				</select>
 			</p>
+=======
+			<input type="text" name="seriesid" autofocus style="width: 60%;"  maxlength="30" placeholder="Series ID" required /><br></p>
+
+			METER OS SERIES POSSIVEIS
+
+>>>>>>> 79ed03744dec69254f1557630c926cd03512a661
 			<p><strong>Element Index:</strong>
 			<input type="text" name="elem_index" autofocus style="width: 50%;" maxlength="30" placeholder="Element Index" required /><br></p>
 			<p><strong>X1:</strong>
@@ -60,7 +67,6 @@
 			<p><strong>Y2:</strong>
 			<input type="text" name="y2" autofocus style="width: 10%;" maxlength="10" placeholder="y2" required /><br></p>
 			<p><input type="hidden" name="patient_id" value="<?=$_REQUEST['number']?>"/></p>
-			<!-- <//?php echo("<input type='hidden' name='patient_id' value=" . $_REQUEST['number'] . "/><br></p>"); ?> -->
 			<p><input type="submit" value="Submit"/></p>
 		</fieldset>
 	</form>
