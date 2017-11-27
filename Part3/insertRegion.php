@@ -38,7 +38,7 @@
 			$stmt1 = $connection->prepare("select x1,y1,x2,y2 from Region as r, Series as s, Study as st, Request as rq where r.series_id=s.series_id and s.request_number=st.request_number and s.description=st.description and st.request_number=rq.number and rq.patient_id= :patient_id and st.date >=all (select st1.date from Study as st1, Request as rq1 where st1.request_number=rq1.number and rq1.patient_id= :patient_id );");
 			
 			$stmt1->bindParam(':patient_id', $patient_id);
-			$result1 = $stmt1->execute();
+			$result1 = $stmt1->execute(); 	
 
 			$stmt = $connection->prepare("INSERT INTO Region VALUES (:series_id,:elem_index,:x1,:y1,:x2,:y2)");
 
@@ -72,7 +72,7 @@
 
 				// in case of not finding any regions for this patient in his last study or not finding any study
 				if ($nrows == 0) {
-					echo("<p>There are no more regions for this patient</p>");
+					echo("<p>The pacient hasn't been subject to a study or there aren't regions associated with the patient's last study</p>");
 				}
 
 				else{
