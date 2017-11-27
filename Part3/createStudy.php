@@ -58,13 +58,36 @@
 
 			 	if($stmt1->rowCount() > 0 && $stmt2->rowCount() > 0){
 					echo("<p>Success, study created.</p>");
+
+					echo("<p>Study values inserted:</p>");
+					echo("<table border=\"1\" cellspacing=\"5\">");
+					echo("<tr><td><strong>Request Number</strong></td><td><strong>Description</strong></td><td><strong>Date</strong></td><td><strong>Doctor ID</strong></td><td><strong>Manufacturer</strong></td></td><td><strong>Serial Number</strong></td></tr>");
+					echo("<tr>");
+					echo("<td>" $requestnumber "</td>");
+					echo("<td>" $description "</td>");
+					echo("<td>" $date "</td>");
+					echo("<td>" $doctorid "</td>");
+					echo("<td>" $manufacturer "</td>");
+					echo("<td>" $serialnumber "</td>");
+					echo("</tr>");
+					echo("</table><br>");
+
+					echo("<p>Series values inserted:</p>");
+					echo("<table border=\"1\" cellspacing=\"5\">");
+					echo("<tr><td><strong>ID</strong></td><td><strong>Name</strong></td>/tr>");
+					echo("<tr>");
+					echo("<td>" $seriesid"</td>");
+					echo("<td>" $seriesname"</td>");
+					echo("</tr>");
+					echo("</table><br>");
+
 				} else {
 					echo("<p>Error, study not created.</p>");
 				}
 
 			} else {
 				$connection->rollBack();
-				echo("<p>Error, study not created.</p>");
+				echo("<p>Study not created.</p>");
 			  	echo 'Error executing statement: ' . $stmt1->errorInfo()[2] . ' ' . $stmt2->errorInfo()[2] ;
 			}
 			
