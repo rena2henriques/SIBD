@@ -51,6 +51,9 @@
 				</select>
 			</p>
 			<input type="text" name="seriesid" autofocus style="width: 60%;"  maxlength="30" placeholder="Series ID" required /><br></p>
+
+			METER OS SERIES POSSIVEIS
+
 			<p><strong>Element Index:</strong>
 			<input type="text" name="elem_index" autofocus style="width: 50%;" maxlength="30" placeholder="Element Index" required /><br></p>
 			<p><strong>X1:</strong>
