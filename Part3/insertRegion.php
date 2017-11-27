@@ -42,9 +42,9 @@
 			$stmt->bindParam(':x2', $x2);
 			$stmt->bindParam(':y2', $y2);
 
-			$stmt->execute();
+			$result = $stmt->execute();
 
-			if ($stmt == FALSE) {
+			if ($result == FALSE) {
 				$info = $stmt->errorInfo();
 				echo("<p>Error: {$info[2]}</p>");
 				exit();
@@ -62,9 +62,9 @@
 			$stmt = $connection->prepare("select x1,y1,x2,y2 from Region as r, Series as s, Study as st, Request as rq where r.series_id=s.series_id and s.request_number=st.request_number and s.description=st.description and st.request_number=rq.number and rq.patient_id= :patient_id and st.date >=all (select st1.date from Study as st1, Request as rq1 where st1.request_number=rq1.number and rq1.patient_id= :patient_id );");
 			
 			$stmt->bindParam(':patient_id', $patient_id);
-			$stmt->execute();
+			$result = $stmt->execute();
 			
-			if ($stmt == FALSE) {
+			if ($result == FALSE) {
 				$info = $stmt->errorInfo();
 				echo("<p>Error: {$info[2]}</p>");
 				exit();

@@ -31,9 +31,9 @@
 		$stmt = $connection->prepare("SELECT * FROM Patient where name like CONCAT('%', :portion_name, '%')");	
 
 		$stmt->bindParam(':portion_name', $name);
-		$stmt->execute();
+		$result = $stmt->execute();
 
-		if ($stmt == FALSE) {
+		if ($result == FALSE) {
 			$info = $stmt->errorInfo();
 			echo("<p>Error: {$info[2]}</p>");
 			exit();

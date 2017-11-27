@@ -32,9 +32,9 @@
 		$stmt = $connection->prepare("SELECT snum, manuf, start, end FROM Wears where patient = :idnumber order by end desc ");
 
 		$stmt->bindParam(':idnumber', $idnumber);
-		$stmt->execute();
+		$result = $stmt->execute();
 
-		if ($stmt == FALSE) {
+		if ($result == FALSE) {
 			$info = $stmt->errorInfo();
 			echo("<p>Error: {$info[2]}</p>");
 			exit();

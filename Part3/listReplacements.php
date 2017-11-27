@@ -36,8 +36,8 @@
 
 		$stmt->bindParam(":manuf", $manuf);
 
-		$stmt->execute();
-		if ($stmt == FALSE) {
+		$result = $stmt->execute();
+		if ($result == FALSE) {
 			$info = $stmt->errorInfo();
 			echo("<p>Error: {$info[2]}</p>");
 			exit();
