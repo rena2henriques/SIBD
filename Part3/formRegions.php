@@ -11,7 +11,7 @@
 		<fieldset style="width: 40%;">
 		<legend><strong>Add a new region:</strong></legend>
 			<p><strong>Series ID:</strong>
-<<<<<<< HEAD
+
 				<select name="seriesid">
 <?php
 				$host = "db.tecnico.ulisboa.pt";
@@ -50,12 +50,7 @@
 ?>
 				</select>
 			</p>
-=======
 			<input type="text" name="seriesid" autofocus style="width: 60%;"  maxlength="30" placeholder="Series ID" required /><br></p>
-
-			METER OS SERIES POSSIVEIS
-
->>>>>>> 79ed03744dec69254f1557630c926cd03512a661
 			<p><strong>Element Index:</strong>
 			<input type="text" name="elem_index" autofocus style="width: 50%;" maxlength="30" placeholder="Element Index" required /><br></p>
 			<p><strong>X1:</strong>
