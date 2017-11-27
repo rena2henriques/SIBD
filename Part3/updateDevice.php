@@ -79,11 +79,7 @@
 			if ($stmt1->execute() && $stmt2->execute()){
 				$connection->commit();
 
-				if($stmt1->rowCount() > 0 && $stmt2->rowCount() > 0){
-					echo("<p>Success, replacement was successful.</p>");
-				} else {
-					echo("<p>Replacement wasn't successful.</p>");
-				}
+				echo("<p>Success, replacement was successful.</p>"); 
 
 			} else {
 				$connection->rollBack();
@@ -91,10 +87,9 @@
 			  	echo 'Error executing statement: ' . $stmt1->errorInfo()[2] . ' ' . $stmt2->errorInfo()	[2] ;
 			}			
 
-			// QUANDO CLICAR NO BOTÃO DE TROCAR PARA UM CERTO DEVICE
-			// TEM QUE DAR UPDATE DO END DATE DO ATUAL PARA A DATA NO MOMENTO
-
-			header('Location: listDevices.php?number=' . $patientid);
+			// Button to go to home page
+			echo("<br><form action='checkPatient.html' method='post'>");
+			echo("<input type='submit' value='Home'/></form>");
 
 			$connection = null;
 		?>
