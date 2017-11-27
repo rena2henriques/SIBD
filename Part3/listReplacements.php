@@ -69,6 +69,10 @@
 			echo("</table>");
 		}
 
+		// Button to go to home page
+		echo("<br><form action='checkPatient.html' method='post'>");
+		echo("<input type='submit' value='Home'/></form>");
+
 		$connection = null;
 	?>
 

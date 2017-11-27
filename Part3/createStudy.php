@@ -67,6 +67,10 @@
 			  	echo 'Error executing statement: ' . $stmt1->errorInfo()[2] . ' ' . $stmt2->errorInfo()[2] ;
 			}
 			
+			// Button to go to home page
+			echo("<br><form action='checkPatient.html' method='post'>");
+			echo("<input type='submit' value='Home'/></form>");
+
 			$connection = null;
 		?>
 </body>
