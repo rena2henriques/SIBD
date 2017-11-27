@@ -6,14 +6,49 @@
 </head>
 <body>
 	<h1 style="font-family: 'Indie Flower', cursive;">Clinic Database:</h1>
-
-	<!-- PRECISAMOS CRIAR UMA PÁGINA PARA CADA ELEMENTO/STUDY? -->
-
+	
 	<form method="post" action="insertRegion.php" autocomplete="off">
 		<fieldset style="width: 40%;">
 		<legend><strong>Add a new region:</strong></legend>
 			<p><strong>Series ID:</strong>
-			<input type="text" name="seriesid" autofocus style="width: 60%;"  maxlength="30" placeholder="Series ID" required /><br></p>
+				<select name="seriesid">
+<?php
+				$host = "db.tecnico.ulisboa.pt";
+				$user = "ist181607";
+				$pass = "laed3426";
+				$dsn = "mysql:host=$host;dbname=$user";
+
+				try {
+					$connection = new PDO($dsn, $user, $pass);
+				} catch(PDOException $exception) {
+					echo("<p>Error: ");
+					echo($exception->getMessage());
+					echo("</p>");
+					exit();
+				}
+
+
+				$stmt = $connection->prepare("select series_id from Series as s, Request as r where s.request_number = r.number and r.patient_id = :patient_id order by series_id asc;");
+
+				$stmt->bindParam(':patient_id', $_REQUEST['number']);
+
+				$result = $stmt->execute();
+
+				if ($result == 0){
+					$info = $stmt->errorInfo();
+					echo("<p> Query Error: {$info[2]}</p>");
+					exit();
+				} else {
+					foreach($stmt as $row)
+					{
+						$seriesid = $row['series_id'];
+						echo("<option value=\"$seriesid\">$seriesid</option>");
+					}					
+				}
+				$connection = null;
+?>
+				</select>
+			</p>
 			<p><strong>Element Index:</strong>
 			<input type="text" name="elem_index" autofocus style="width: 50%;" maxlength="30" placeholder="Element Index" required /><br></p>
 			<p><strong>X1:</strong>
