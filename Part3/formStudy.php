@@ -10,8 +10,7 @@
 	<form method="post" action="createStudy.php">
 		<fieldset style="width: 50%;">
 		<legend><strong>Register a new Study:</strong></legend>
-			<p><strong>Request Number:</strong>
-			<select name="requestnumber">
+			
 <?php
 			$host = "db.ist.utl.pt";
 			$user = "ist181588";
@@ -39,11 +38,27 @@
 					echo("<p> Query Error: {$info[2]}</p>");
 					exit();
 			}
+
+			if($stmt->rowCount() == 0){
+				echo("<p>There isn't a requested study for this Patient.</p>");	
+
+				echo("</fieldset></form>");
+				//Button to go to home page
+				echo("<br><form action='checkPatient.html' method='post'>");
+				echo("<input type='submit' value='Home'/></form>");
+				$connection = null;
+				exit();
+			}
+
+			echo("<p><strong>Request Number:</strong>");
+			echo("<select name='requestnumber'>");
+
 			foreach($stmt as $row)
 			{
 				$requestnumber = $row['number'];
 				echo("<option value=\"$requestnumber\">$requestnumber</option>");
 			}
+
 			$connection = null;
 ?>
 			</select>
