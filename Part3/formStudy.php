@@ -38,7 +38,7 @@
 			}
 			foreach($result as $row)
 			{
-				$requestnumber = $row['requestnumber'];
+				$requestnumber = $row['number'];
 				echo("<option value=\"$requestnumber\">$requestnumber</option>");
 			}
 			$connection = null;
