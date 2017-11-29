@@ -72,7 +72,7 @@
 
 				// in case of not finding any regions for this patient in his last study or not finding any study
 				if ($nrows == 0) {
-					echo("<p>The pacient hasn't been subject to a study or there aren't regions associated with the patient's last study</p>");
+					echo("<p>There aren't regions associated with the patient's last study</p>");
 				}
 
 				else{
