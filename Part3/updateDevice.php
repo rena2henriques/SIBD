@@ -80,6 +80,7 @@
 				$connection->commit();
 
 				echo("<p>Success, replacement was successful.</p>"); 
+				echo("<p> Device nr" . $snumOld . "was replaced by device nr". $snumNew . "of manufacturer". $manuf . ".</p>");
 
 			} else {
 				$connection->rollBack();
